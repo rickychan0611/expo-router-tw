@@ -24,7 +24,6 @@ const client = new QueryClient({
 });
 
 const RootLayout = () => {
-  useReactQueryDevTools(client);
   const segments = useSegments();
   const isLogin = segments[segments.length - 1] === "(tabs)";
   const drawerTitle = isLogin ? "LOGIN" : segments.length > 0 ? segments[segments.length - 1].toLowerCase() : "";
@@ -34,7 +33,7 @@ const RootLayout = () => {
   : 'This app is running an update';
 
   console.log('runTypeMessage', runTypeMessage)
-
+  useReactQueryDevTools(client);
   return (
     <QueryClientProvider
       client={client}
