@@ -1,21 +1,21 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { usePokemonList } from "@/src/hooks/usePokemon";
+import { usePokemonDetail, usePokemonList } from "@/src/hooks/usePokemon";
 
 const Details = () => {
   const { user } = useLocalSearchParams();
   const client = useQueryClient();
-  const { data } = usePokemonList();
+  const { data } = usePokemonDetail(3);
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Details</Text>
-        <Text style={styles.user}>Use param: {user}</Text>
+        <Text style={styles.user}> {JSON.stringify(data)}</Text>
         <View>
-          {data?.results ? data.results.map((item: any) => (
+          {/* {data?.results ? data.results.map((item: any) => (
             <Text key={item.name}>{item.name}</Text>
-          )) : <Text>No data</Text>}
+          )) : <Text>No data</Text>} */}
         </View>
       </View>
     </View>

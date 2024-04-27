@@ -1,12 +1,25 @@
+import { usePokemonDetail } from "@/src/hooks";
 import tw from "@/tw";
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { QueryClient } from "@tanstack/query-core";
+import { useQueryClient } from "@tanstack/react-query/build/legacy/QueryClientProvider";
+import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { useAppColorScheme } from "twrnc";
 
 const Index = () => {
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  const queryClient = useQueryClient()
+  
+  const data = usePokemonDetail(3);
+  
   return (
-    <View style={tw`p-4`}>
-    <Text style={tw`text-secondary-500`}>Index</Text>
-  </View>
-);
+    <View style={tw`flex-1 bg-primary-100 dark:bg-primary-500`}>
+      <View style={tw`p-4`}>
+        <Pressable onPress={() => toggleColorScheme()}>
+          {<Text style={tw`text-primary-500 dark:text-primary-100`}>{JSON.stringify(data)}</Text>}
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
 export default Index;

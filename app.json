@@ -24,6 +24,9 @@
       "requestHeaders": {
         "expo-channel-name": "main"
       }
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
