@@ -1,24 +1,25 @@
-import { Text, View, StyleSheet } from "react-native";
-import { usePokemonList } from "@hooks/usePokemon";
+import { Text, View, StyleSheet, ScrollView, ScrollViewBase } from "react-native";
+import { usePokemonList } from "@/src/hooks/usePokemon";
+import tw from "../../tw";
 
 const Home = () => {
   const { data } = usePokemonList();
 
   return (
-    <View style={styles.container}>
+    <ScrollView >
       <View style={styles.main}>
-        <Text style={styles.title}>Home</Text>
-        <View className="flex-1 items-center justify-center bg-red-500">
-          <Text className="text-md font-bold">Hello World</Text>
+        <Text style={tw`text-primary text-3xl`}>Home</Text>
+        <View style={tw`flex-1 items-center justify-center bg-red-500`}>
+          <Text style={tw` font-bold`}>Hello World</Text>
         </View>
         <Text style={styles.subtitle}>This is the Details page of your app.</Text>
         <View>
-          {data?.results ? data.results.map((item) => (
+          {data?.results ? data.results.map((item: any) => (
             <Text key={item.name}>{item.name}</Text>
           )) : <Text>No data</Text>}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
