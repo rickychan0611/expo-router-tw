@@ -14,17 +14,7 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
   const [isAppReady, setIsAppReady] = React.useState(false)
 
   const [fontsLoaded, fontError] = useFonts({
-    'mi': require('../assets/fonts/MiSans VF.ttf'),
-    // 'mi-100': require('../assets/fonts/MiSans-Thin.ttf'),
-    // 'mi-200': require('../assets/fonts/MiSans-ExtraLight.ttf'),
-    // 'mi-300': require('../assets/fonts/MiSans-Light.ttf'),
-    // 'mi-400': require('../assets/fonts/MiSans-Normal.ttf'),
-    // 'mi-500': require('../assets/fonts/MiSans-Regular.ttf'),
-    // 'mi-600': require('../assets/fonts/MiSans-Medium.ttf'),
-    // 'mi-700': require('../assets/fonts/MiSans-Semibold.ttf'),
-    // 'mi-800': require('../assets/fonts/MiSans-Demibold.ttf'),
-    // 'mi-900': require('../assets/fonts/MiSans-Bold.ttf'),
-    // 'mi-1000': require('../assets/fonts/MiSans-Heavy.ttf')
+    'mi': require('../assets/fonts/MiSans-VF.ttf')
   });
 
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
@@ -62,6 +52,7 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
   
   React.useEffect(() => {
     if (fontsLoaded && isColorSchemeLoaded) {
+      console.log("fontsLoaded", fontsLoaded)
       hideSplashScreen()
     }
   }, [fontsLoaded, isColorSchemeLoaded])

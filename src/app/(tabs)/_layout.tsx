@@ -12,7 +12,7 @@ const RouterTabs = () => {
   return (
     <Tabs
       key={themeKey}
-      initialRouteName='sign-in'
+      initialRouteName='index'
       backBehavior='history'
       screenOptions={{
         headerShown: false,

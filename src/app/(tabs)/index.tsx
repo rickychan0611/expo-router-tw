@@ -4,9 +4,10 @@ import { useAppColorScheme } from "twrnc";
 import { useEffect } from "react";
 import { useAppStore } from "@/stores";
 import useColorScheme from "@/hooks/useColorScheme";
+import { H1, H2, H3 } from "@/components/Typography";
 
 const Index = () => {
-  
+
   const { switchTheme } = useColorScheme();
 
   return (
@@ -15,7 +16,9 @@ const Index = () => {
         <Pressable onPress={() => {
           switchTheme()
         }}>
-          {<Text style={tw`text-primary-500 dark:text-secondary-foreground`}>sdfsdfsdfsd</Text>}
+          {<H1 style={tw`text-red-500`}>sdfsdfsdfsd</H1>}
+          {<H2>sdfsdfsdfsd</H2>}
+          {<H3>sdfsdfsdfsd</H3>}
         </Pressable>
       </View>
     </View>

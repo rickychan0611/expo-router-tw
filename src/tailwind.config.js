@@ -3,6 +3,9 @@ import { colors } from "./colors"
 
 module.exports = {
   theme: {
+    fontFamily: {
+      'mi': 'mi',
+    },
     borderRadius: {
       'xxs': '2px',
       'xs': '4px',
