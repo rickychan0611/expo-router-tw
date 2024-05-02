@@ -1,39 +1,43 @@
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tw from "@/tw";
+import TabBar from "@/components/TabBar";
 
 const RouterTabs = () => {
   return (
-    <Tabs key={tw.memoBuster}
-      initialRouteName="index" screenOptions={{ headerShown: false }}>
+    <Tabs
+      key={tw.memoBuster}
+      initialRouteName='sign-in'
+      backBehavior='history'
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={props => <TabBar {...props} />}>
       <Tabs.Screen
-        name="index"
+        name='index'
+        options={{ title: 'Home' }}
+      />
+      <Tabs.Screen
+        name='orders'
         options={{
-          tabBarIcon: () => (
-            <MaterialCommunityIcons color="black" name="face-man-profile" size={24} />
-          ),
+          title: 'Order',
         }}
       />
       <Tabs.Screen
-        name="home"
+        name='listings'
         options={{
-          tabBarIcon: () => <MaterialCommunityIcons color="black" name="home" size={24} />,
+          title: 'Listings',
         }}
       />
       <Tabs.Screen
-        name="details"
+        name='sign-in'
         options={{
-          href: { pathname: "/details", params: { user: "evanbacon" } },
-          tabBarIcon: () => (
-            <MaterialCommunityIcons color="black" name="card-account-details" size={24} />
-          ),
+          title: 'SignIn',
         }}
       />
       <Tabs.Screen
-        name="counter"
-        options={{
-          tabBarIcon: () => <MaterialCommunityIcons color="black" name="counter" size={24} />,
-        }}
+        name='+not-found'
+        options={{ href: null }}
       />
     </Tabs>
   );

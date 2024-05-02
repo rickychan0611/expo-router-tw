@@ -1,17 +1,22 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { useDeviceContext } from 'twrnc';
-import { useColorScheme } from '@/components/useColorScheme';
+import React from 'react';
+import { useAppColorScheme, useDeviceContext } from 'twrnc';
 import tw from '@/tw'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
+import InitApp from '@/components/InitApp';
+import { StatusBar, View } from 'react-native'
 
 export default function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const [up, setUp] = React.useState(true)
+
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+
+  React.useEffect(() => {
+    setUp(false)
+    setTimeout(() => { setUp(true) }, 1)
+  }, [colorScheme])
+
   const client = new QueryClient({
     defaultOptions: {
       // queries: {
@@ -28,14 +33,25 @@ export default function RootLayoutNav() {
   });
 
   useReactQueryDevTools(client);
+
+  useDeviceContext(tw,
+    //   {
+    //   observeDeviceColorSchemeChanges: false,
+    //   initialColorScheme: `light`, 
+    // }
+  );
+
   return (
     <QueryClientProvider client={client}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </ThemeProvider>
+      <View style={tw`flex-1 bg-background`}>
+        {up && <StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} animated />}
+        <InitApp>
+          <Stack key={tw.memoBuster} >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
+          </Stack>
+        </InitApp>
+      </View>
     </QueryClientProvider>
   );
 }
