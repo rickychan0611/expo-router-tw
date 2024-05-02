@@ -1,9 +1,11 @@
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import tw from "@/tw";
 
 const RouterTabs = () => {
   return (
-    <Tabs initialRouteName="index" screenOptions={{ headerShown: false }}>
+    <Tabs key={tw.memoBuster}
+      initialRouteName="index" screenOptions={{ headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{

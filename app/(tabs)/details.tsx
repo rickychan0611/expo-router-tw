@@ -2,11 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePokemonDetail, usePokemonList } from "@/src/hooks/usePokemon";
+import { useEffect } from "react";
+import tw from "@/tw";
 
 const Details = () => {
   const { user } = useLocalSearchParams();
   const client = useQueryClient();
   const { data } = usePokemonDetail(3);
+
+  useEffect(() => {
+    console.log(tw.memoBuster)
+  }, [])
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>

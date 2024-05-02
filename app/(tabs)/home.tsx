@@ -1,15 +1,19 @@
-import { Text, View, StyleSheet, ScrollView, ScrollViewBase } from "react-native";
+import { Text, View, StyleSheet, ScrollView, ScrollViewBase, useColorScheme } from "react-native";
 import { usePokemonList } from "@/src/hooks/usePokemon";
 import tw from "../../tw";
+import { useEffect } from "react";
 
 const Home = () => {
   const { data } = usePokemonList();
-
+  useEffect(() => {
+    console.log(tw.memoBuster)
+  }, [])
+  useColorScheme()
   return (
     <ScrollView >
-      <View style={styles.main}>
+      <View style={tw`flex-1 items-center justify-center dark:bg-primary-500`}>
         <Text style={tw`text-primary text-3xl`}>Home</Text>
-        <View style={tw`flex-1 items-center justify-center bg-red-500`}>
+        <View style={tw`flex-1 items-center justify-center dark:bg-primary-500`} key={tw.memoBuster}> 
           <Text style={tw` font-bold`}>Hello World</Text>
         </View>
         <Text style={styles.subtitle}>This is the Details page of your app.</Text>
