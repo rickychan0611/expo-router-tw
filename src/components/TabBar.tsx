@@ -1,23 +1,32 @@
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react'
+import { Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Blocks, Home, UserRound, ScrollText, LayoutDashboard, ClipboardList, Boxes, Store } from 'lucide-react-native';
 import tw from '@/tw'
+import { colors } from '@/colors'
+import { useAppColorScheme } from 'twrnc';
+import { useAppStore } from '@/stores';
 
-export default function TabBar({ state, descriptors, navigation, props }: any) {
+export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
-
+  const count = useAppStore((state) => state.count);
   const Icon = (props: any) => {
     const label = props.label
     const Component =
       label === "Home" ? LayoutDashboard :
         label === "Order" ? ClipboardList :
           label === "Listings" ? Boxes : Store
-    return <Component  />
+    return <Component size={30} />
   }
 
+  // const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  // // const colorScheme = useColorScheme();
+  // useEffect(() => {
+  //   console.log("xxxxxxxx", tw.memoBuster)
+  // }, [colorScheme, router.pathname])
+
   return (
-    <View style={[tw`flex-row pt-2 bg-card`, { paddingBottom: insets?.bottom || 6 }]}>
+    <View style={[tw`flex-row bg-card-light dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}>
       {state.routes.map((route: any, index: number) => {
 
         const { options } = descriptors[route.key];
@@ -56,8 +65,7 @@ export default function TabBar({ state, descriptors, navigation, props }: any) {
           label === "SignIn"
         ) {
 
-          const Iconclass = isFocused ? tw`text-primary stroke-[1.5px]` : tw`text-muted stroke-[1.5px]`
-          const Textclass = isFocused ? tw`text-primary text-sm` : tw`text-muted text-sm `
+          const color = isFocused ? colors.primary.DEFAULT : colors.muted
 
           return (
             <TouchableOpacity
@@ -70,13 +78,17 @@ export default function TabBar({ state, descriptors, navigation, props }: any) {
               style={{ flex: 1 }}
               key={index}
             >
-              <View style={tw`flex-col gap-1 justify-center items-center`}>
-                <Icon color={isFocused ? "#1B95E0" : "#38434D"} size={30} label={label} />
-                <Text style={Textclass}
-                  maxFontSizeMultiplier={1.4}
-                >
+              <View style={tw`flex-col mt-2 gap-1 justify-center items-center `}
+              >
+                {label === "Home" ? <LayoutDashboard color={color} size={30} key={tw.memoBuster + index} /> :
+                  label === "Order" ? <ClipboardList color={color} size={30} /> :
+                    label === "Listings" ? <Boxes color={color} size={30} /> :
+                      <Store color={color} size={30} />
+                }
+                <Text style={isFocused ? tw`text-primary text-sm` : tw`text-muted text-sm `}>
                   {label}
                 </Text>
+                {/* <Text style={tw`text-muted`}>useColorScheme(): {colorScheme}</Text> */}
               </View>
             </TouchableOpacity>
           );

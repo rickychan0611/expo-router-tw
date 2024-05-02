@@ -1,18 +1,24 @@
-import { Tabs } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Tabs, useRouter } from "expo-router";
 import tw from "@/tw";
 import TabBar from "@/components/TabBar";
+import { useAppStore } from "@/stores";
 
 const RouterTabs = () => {
+
+  // when triggerThemeKey is called in hooks/useColorScheme, it will cause component re-render by passing themeKey to TabBar's key prop
+  const themeKey =useAppStore((state) => state.themeKey);
+
+  const router = useRouter();
   return (
     <Tabs
-      key={tw.memoBuster}
+      key={themeKey}
       initialRouteName='sign-in'
       backBehavior='history'
       screenOptions={{
         headerShown: false,
       }}
-      tabBar={props => <TabBar {...props} />}>
+      tabBar={props => <TabBar {...props} key={tw.memoBuster} router={router} />}
+    >
       <Tabs.Screen
         name='index'
         options={{ title: 'Home' }}

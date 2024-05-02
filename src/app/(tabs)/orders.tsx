@@ -1,57 +1,25 @@
-import { Text, View, StyleSheet, ScrollView, ScrollViewBase, useColorScheme } from "react-native";
-import { usePokemonList } from "@/hooks/usePokemon";
 import tw from "@/tw";
+import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { useAppColorScheme } from "twrnc";
 import { useEffect } from "react";
+import { useAppStore } from "@/stores";
+import useColorScheme from "@/hooks/useColorScheme";
 
-const Home = () => {
-  const { data } = usePokemonList();
-  useEffect(() => {
-    console.log(tw.memoBuster)
-  }, [])
-  useColorScheme()
+const Index = () => {
+  
+  const { switchTheme } = useColorScheme();
+
   return (
-    <ScrollView >
-      <View style={tw`flex-1 items-center justify-center dark:bg-primary-500`}>
-        <Text style={tw`text-primary text-3xl dark:text-secondary`}>Home</Text>
-        <View style={tw`flex-1 items-center justify-center dark:bg-primary-500`} key={tw.memoBuster}> 
-          <Text style={tw` font-bold`}>Hello World</Text>
-        </View>
-        <Text style={styles.subtitle}>This is the Details page of your app.</Text>
-        <View>
-          {data?.results ? data.results.map((item: any) => (
-            <Text key={item.name}>{item.name}</Text>
-          )) : <Text>No data</Text>}
-        </View>
+    <View style={tw`flex-1 bg-primary-100 dark:bg-muted`}>
+      <View style={tw`p-4`}>
+        <Pressable onPress={() => {
+          switchTheme()
+        }}>
+          {<Text style={tw`text-primary-500 dark:text-secondary-foreground`}>sdfsdfsdfsd</Text>}
+        </Pressable>
       </View>
-    </ScrollView>
+    </View>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-  linkButton: {
-    fontSize: 24,
-    color: "#1B95E0",
-    marginTop: 16,
-  },
-});
-
-export default Home;
+export default Index;

@@ -1,64 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Link, useLocalSearchParams } from "expo-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { usePokemonDetail, usePokemonList } from "@/hooks/usePokemon";
-import { useEffect } from "react";
 import tw from "@/tw";
+import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { useAppColorScheme } from "twrnc";
+import { useEffect } from "react";
 
-const Details = () => {
-  const { user } = useLocalSearchParams();
-  const client = useQueryClient();
-  const { data } = usePokemonDetail(3);
-
-  useEffect(() => {
-    console.log(tw.memoBuster)
-  }, [])
+const Index = () => {
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Details</Text>
-        <Text style={styles.user}> {JSON.stringify(data)}</Text>
-        <View>
-          {/* {data?.results ? data.results.map((item: any) => (
-            <Text key={item.name}>{item.name}</Text>
-          )) : <Text>No data</Text>} */}
-        </View>
+    <View style={tw`flex-1 bg-primary-100 dark:bg-muted`}>
+      <View style={tw`p-4`}>
+        <Pressable onPress={() => toggleColorScheme()}>
+          {<Text style={tw`text-primary-500 dark:text-secondary-foreground`}>sdfsdfsdfsd</Text>}
+        </Pressable>
       </View>
     </View>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-  user: {
-    fontSize: 24,
-    color: "#38434D",
-    marginTop: 16,
-  },
-  linkButton: {
-    fontSize: 24,
-    color: "#1B95E0",
-    marginTop: 16,
-  },
-});
-
-export default Details;
+export default Index;

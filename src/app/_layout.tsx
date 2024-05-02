@@ -5,7 +5,16 @@ import tw from '@/tw'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import InitApp from '@/components/InitApp';
-import { StatusBar, View } from 'react-native'
+import { StatusBar, Text, TextInput, View } from 'react-native'
+
+// @ts-ignore
+Text.defaultProps = Text.defaultProps || {};
+// @ts-ignore
+TextInput.defaultProps = Text.defaultProps || {};
+// @ts-ignore
+Text.defaultProps.maxFontSizeMultiplier = 1.5
+// @ts-ignore
+TextInput.defaultProps.maxFontSizeMultiplier = 1.5
 
 export default function RootLayoutNav() {
   const [up, setUp] = React.useState(true)
@@ -13,6 +22,7 @@ export default function RootLayoutNav() {
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
 
   React.useEffect(() => {
+    console.log("UP")
     setUp(false)
     setTimeout(() => { setUp(true) }, 1)
   }, [colorScheme])
@@ -44,14 +54,13 @@ export default function RootLayoutNav() {
   return (
     <QueryClientProvider client={client}>
       <View style={tw`flex-1 bg-background`}>
-        {up && <StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} animated />}
+        {<StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} animated />}
         <InitApp>
-          <Stack key={tw.memoBuster} >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
-          </Stack>
+          <Stack key={tw.memoBuster}
+            screenOptions={{ headerShown: false }}
+          />
         </InitApp>
-      </View>
-    </QueryClientProvider>
+      </View >
+    </QueryClientProvider >
   );
 }
