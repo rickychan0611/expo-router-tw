@@ -4,7 +4,16 @@ import { colors } from "./colors"
 module.exports = {
   theme: {
     fontFamily: {
-      'mi': 'mi',
+      'mi-100': 'mi-100',
+      'mi-200': 'mi-200',
+      'mi-300': 'mi-300',
+      'mi-400': 'mi-400',
+      'mi-500': 'mi-500',
+      'mi-600': 'mi-600',
+      'mi-700': 'mi-700',
+      'mi-800': 'mi-800',
+      'mi-900': 'mi-900',
+      'mi-1000': 'mi-1000',
     },
     borderRadius: {
       'xxs': '2px',

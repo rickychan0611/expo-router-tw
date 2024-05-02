@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAppStore } from "@/stores";
 import useColorScheme from "@/hooks/useColorScheme";
 import { H1, H2, H3 } from "@/components/Typography";
+import Button from "@/components/Button";
 
 const Index = () => {
 
@@ -19,6 +20,7 @@ const Index = () => {
           {<H1 style={tw`text-red-500`}>sdfsdfsdfsd</H1>}
           {<H2>sdfsdfsdfsd</H2>}
           {<H3>sdfsdfsdfsd</H3>}
+          <Button>Button</Button>
         </Pressable>
       </View>
     </View>
