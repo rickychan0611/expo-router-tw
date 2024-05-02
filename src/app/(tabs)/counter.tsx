@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, ScrollView, ScrollViewBase, useColorScheme } from "react-native";
-import { usePokemonList } from "@/src/hooks/usePokemon";
-import tw from "../../tw";
+import { usePokemonList } from "@/hooks/usePokemon";
+import tw from "@/tw";
 import { useEffect } from "react";
 
 const Home = () => {

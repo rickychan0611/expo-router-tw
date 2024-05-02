@@ -1,14 +1,12 @@
-import { usePokemonDetail } from "@/src/hooks";
+import { usePokemonDetail } from "@/hooks";
 import tw from "@/tw";
 import { QueryClient } from "@tanstack/query-core";
-import { useQueryClient } from "@tanstack/react-query/build/legacy/QueryClientProvider";
 import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
 import { useAppColorScheme } from "twrnc";
 import { useEffect } from "react";
 
 const Index = () => {
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-  const queryClient = useQueryClient()
   
   const data = usePokemonDetail(3);
   useEffect(() => {
@@ -16,10 +14,10 @@ const Index = () => {
   }, [])
   
   return (
-    <View style={tw`flex-1 bg-primary-100 dark:bg-primary-500`}>
+    <View style={tw`flex-1 bg-primary-100 dark:bg-muted`}>
       <View style={tw`p-4`}>
         <Pressable onPress={() => toggleColorScheme()}>
-          {<Text style={tw`text-primary-500 dark:text-primary-100`}>{JSON.stringify(data)}</Text>}
+          {<Text style={tw`text-primary-500 dark:text-secondary-foreground`}>sdfsdfsdfsd</Text>}
         </Pressable>
       </View>
     </View>

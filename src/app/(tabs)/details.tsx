@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { usePokemonDetail, usePokemonList } from "@/src/hooks/usePokemon";
+import { usePokemonDetail, usePokemonList } from "@/hooks/usePokemon";
 import { useEffect } from "react";
 import tw from "@/tw";
 
