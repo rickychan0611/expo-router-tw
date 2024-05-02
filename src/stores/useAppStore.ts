@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type AppState = {
   count: number;
-  themeKey: number;
+  themeKey: string;
   triggerThemeKey: () => void;
   increment: () => void;
   decrement: () => void;
@@ -11,8 +11,8 @@ type AppState = {
 
 export const useAppStore = create<AppState>((set) => ({
   count: 0,
-  themeKey: 0,
-  triggerThemeKey: () => set((state) => ({ themeKey: state.themeKey + 1 })),
+  themeKey: "light",
+  triggerThemeKey: () => set((state) => ({ themeKey: state.themeKey === "light" ? "dark" : "light" })),
   increment: () => set((state) => ({ count: state.count + 1 })),
   decrement: () => set((state) => ({ count: state.count - 1 })),
   reset: () => set({ count: 0 }),

@@ -53,14 +53,12 @@ export default function RootLayoutNav() {
 
   return (
     <QueryClientProvider client={client}>
-      <View style={tw`flex-1 bg-background`}>
-        {<StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} animated />}
-        <InitApp>
-          <Stack key={tw.memoBuster}
-            screenOptions={{ headerShown: false }}
-          />
-        </InitApp>
-      </View >
+      {<StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} animated />}
+      <InitApp>
+        <Stack key={tw.memoBuster}
+          screenOptions={{ headerShown: false }}
+        />
+      </InitApp>
     </QueryClientProvider >
   );
 }

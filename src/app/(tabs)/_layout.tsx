@@ -2,11 +2,12 @@ import { Tabs, useRouter } from "expo-router";
 import tw from "@/tw";
 import TabBar from "@/components/TabBar";
 import { useAppStore } from "@/stores";
+import { View } from "react-native";
 
 const RouterTabs = () => {
 
   // when triggerThemeKey is called in hooks/useColorScheme, it will cause component re-render by passing themeKey to TabBar's key prop
-  const themeKey =useAppStore((state) => state.themeKey);
+  const themeKey = useAppStore((state) => state.themeKey);
 
   const router = useRouter();
   return (

@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
-import { Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Blocks, Home, UserRound, ScrollText, LayoutDashboard, ClipboardList, Boxes, Store } from 'lucide-react-native';
 import tw from '@/tw'
 import { colors } from '@/colors'
 import { useAppColorScheme } from 'twrnc';
 import { useAppStore } from '@/stores';
+import useColorScheme from '@/hooks/useColorScheme';
 
 export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
   const count = useAppStore((state) => state.count);
+  const { isDarkColorScheme } = useColorScheme();
+
   const Icon = (props: any) => {
     const label = props.label
     const Component =
@@ -26,7 +29,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
   // }, [colorScheme, router.pathname])
 
   return (
-    <View style={[tw`flex-row bg-card-light dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}>
+    <View style={[tw`flex-row bg-card dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}>
       {state.routes.map((route: any, index: number) => {
 
         const { options } = descriptors[route.key];
@@ -65,7 +68,9 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
           label === "SignIn"
         ) {
 
-          const color = isFocused ? colors.primary.DEFAULT : colors.muted
+          const color = isFocused ?
+            (isDarkColorScheme ? colors.primary.dark.DEFAULT : colors.primary.DEFAULT) :
+            (isDarkColorScheme ? colors.muted.dark : colors.muted.DEFAULT)
 
           return (
             <TouchableOpacity
@@ -85,7 +90,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
                     label === "Listings" ? <Boxes color={color} size={30} /> :
                       <Store color={color} size={30} />
                 }
-                <Text style={isFocused ? tw`text-primary text-sm` : tw`text-muted text-sm `}>
+                <Text style={isFocused ? tw`text-primary dark:text-primary-dark text-sm` : tw`text-muted dark:text-muted-dark text-sm `}>
                   {label}
                 </Text>
                 {/* <Text style={tw`text-muted`}>useColorScheme(): {colorScheme}</Text> */}

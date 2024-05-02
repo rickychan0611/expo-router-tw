@@ -38,7 +38,7 @@ export function LanguageToggle() {
   return (
     <TouchableOpacity style={tw`text-sm flex flex-row flex-nowrap items-center p-1 rounded-lg mr-2`}
       onPress={async () => changeLanguage()} >
-      <Globe color={colors.muted} size={23} strokeWidth={1.25} />
+      <Globe color={colors.muted.DEFAULT} size={23} strokeWidth={1.25} />
       <Text style={tw`text-muted`}>{i18n.language === "cn" ? "EN" : "中"}</Text>
     </TouchableOpacity>
   );

@@ -17,8 +17,8 @@ type Props = {
 
 const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, circle, onPress }, props) => {
   // default
-  let bgClass = tw`bg-primary-DEFAULT web:hover:bg-primary-700 border border-primary web:hover:border-primary-700`
-  let textClass = tw`text-primary-foreground`
+  let bgClass = tw`bg-primary dark:bg-primary-dark hover:bg-primary-900 border border-primary dark:border-primary-dark hover:border-primary-900`
+  let textClass = tw`text-primary-foreground dark:text-primary-dark-foreground`
   const cirlceClass = circle ? tw`rounded-full p-sm` : tw`rounded py-sm px-m`
 
   //disabled
@@ -41,7 +41,7 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
     textClass = tw`text-secondary-foreground`
   }
   else if (variant === "outline") {
-    bgClass = tw`web:hover:bg-primary-100 border border-primary`
+    bgClass = tw`border border-primary dark:border-primary-dark`
     textClass = tw`text-primary`
   }
 

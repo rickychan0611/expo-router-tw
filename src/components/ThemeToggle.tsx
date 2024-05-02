@@ -16,9 +16,9 @@ export function ThemeToggle() {
       }}
     >
       {isDarkColorScheme ? (
-        <MoonStar color={colors.muted} size={23} strokeWidth={1.25} />
+        <MoonStar color={colors.muted.DEFAULT} size={23} strokeWidth={1.25} />
       ) : (
-        <Sun color={colors.muted} size={24} strokeWidth={1.25} />
+        <Sun color={colors.muted.DEFAULT} size={24} strokeWidth={1.25} />
       )}
     </TouchableOpacity>
   );
