@@ -8,8 +8,8 @@ const Container = ({ children }: { children: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[tw`flex-1 w-full justify-center items-center bg-background dark:bg-background-dark`]}>
-      <View style={[tw`flex-1 w-full lg:container lg:mx-auto`]}>
+    <View style={[tw`p-2 pb-10 flex-1 w-full justify-center items-center bg-background dark:bg-background-dark`]}>
+      <View style={[tw`w-full lg:max-w-7xl`]}>
         {children}
       </View>
     </View>

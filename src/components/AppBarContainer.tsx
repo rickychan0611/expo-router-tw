@@ -52,7 +52,7 @@ const AppBarContainer = ({ children }: Props) => {
 
 
   return (
-    <View style={[tw`bg-primary dark:bg-primary-dark z-50 w-full flex flex-row justify-between items-center px-sm`, { paddingTop: insets.top + 8 }]}
+    <View style={[tw`bg-primary dark:bg-primary-dark z-50 w-full flex flex-row justify-between items-center px-4 lg:px-10`, { paddingTop: insets.top + 8 }]}
     >
       <RowBetween style={tw`flex-1 gap-4`}>
         {children}

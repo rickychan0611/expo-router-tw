@@ -7,7 +7,7 @@ interface Props extends ViewProps {
 
 const Card = (props: Props) => {
   return (
-    <View style={[tw`bg-card dark:bg-card-dark p-ml rounded-sm`, props.style]}>
+    <View style={[tw`bg-card dark:bg-card-dark px-3 py-4 rounded-sm`, props.style]}>
       {props.children}
     </View>
   )

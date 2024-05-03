@@ -1,3 +1,4 @@
+import { StateDays } from "@/interfaces/productTypes";
 import { create } from "zustand";
 
 type AppState = {
@@ -7,6 +8,8 @@ type AppState = {
   increment: () => void;
   decrement: () => void;
   reset: () => void;
+  statsFilter: StateDays;
+  setStatsFilter: (filter: StateDays) => void;
 };
 
 export const useAppStore = create<AppState>((set) => ({
@@ -16,4 +19,6 @@ export const useAppStore = create<AppState>((set) => ({
   increment: () => set((state) => ({ count: state.count + 1 })),
   decrement: () => set((state) => ({ count: state.count - 1 })),
   reset: () => set({ count: 0 }),
+  statsFilter: "Yesterday",
+  setStatsFilter: (filter) => set({ statsFilter: filter }),
 }));

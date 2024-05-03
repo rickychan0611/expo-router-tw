@@ -3,7 +3,7 @@ export interface useGetOrderList {
   page: number;
   pagesize: number;
   start_time?: number;
-  end_time?: number;  
+  end_time?: number;
 }
 
 export interface Order {
@@ -33,3 +33,5 @@ export interface Order {
   buyer_str: string
   order_items_str: string
 }
+
+export type StateDays = "Yesterday" | "Last 7 days" | "Last 30 days" | "This month" | "This year" | "All time";

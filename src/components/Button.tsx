@@ -15,10 +15,12 @@ type Props = {
   style?: any,
   icon?: keyof typeof Icons,
   circle?: boolean
-  color?: string
+  color?: string,
+  darkColor?: string,
+  full?: boolean
 }
 
-const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, circle, onPress, color }, props) => {
+const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, circle, onPress, color, darkColor, full }, props) => {
 
   // default
   let bgClass = tw`bg-primary dark:bg-primary-dark`
@@ -27,8 +29,8 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
 
   //custom color
   if (color) {
-    bgClass = tw`bg-[${color}] dark:bg-[${adjustBrightness(color, -0.4 )}]`
-    textClass = tw`text-[${getContrastColor(color)}] dark:text-[${getContrastColor(adjustBrightness(color, -0.4 ))}]`
+    bgClass = tw`bg-[${color}] dark:bg-[${darkColor + ""}]`
+    textClass = tw`text-[${getContrastColor(color)}] dark:text-[${getContrastColor(darkColor + "")}]`
     if (disabled) {
       bgClass = tw`bg-${color}-200`
       textClass = tw`text-${color}-400`
@@ -62,14 +64,14 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
   const Icon: any = icon ? Icons[icon] : <></>
 
   return (
-    <PressableOpacity style={[style, bgClass, cirlceClass]} disabled={disabled} onPress={onPress}>
-      <Center>
-        <Row style={tw`gap-2`}>
+    <PressableOpacity style={[bgClass, cirlceClass, style]} disabled={disabled} onPress={onPress} full={full}>
+      <Center >
+        <Center style={tw`gap-2`}>
           {icon && <Icon style={textClass} />}
-          {!circle && <Interact style={textClass}>
+          {!circle && <Interact style={[textClass, tw`text-center px-2`]}>
             {children}
           </Interact>}
-        </Row>
+        </Center>
       </Center>
     </PressableOpacity>
   )
