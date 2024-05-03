@@ -9,6 +9,7 @@ import InitApp from '@/components/InitApp';
 import { StatusBar, Text, TextInput, View } from 'react-native'
 import { useAppState } from "@/hooks/useAppState";
 import useColorScheme from "@/hooks/useTheme";
+import { useAppStore } from "@/stores";
 
 // @ts-ignore
 Text.defaultProps = Text.defaultProps || {};
@@ -54,11 +55,14 @@ export default function RootLayoutNav() {
     }
   );
 
+  const themekey = useAppStore((state) => state.themeKey);
+
   return (
     <QueryClientProvider client={client}>
       {up && <StatusBar barStyle="light-content" />}
       <InitApp>
         <Stack
+          key={themekey}
           screenOptions={{ headerShown: false }}
         />
       </InitApp>
