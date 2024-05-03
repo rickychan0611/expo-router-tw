@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { getLocales } from 'expo-localization';
 import { useTranslation } from 'react-i18next';
-import useColorScheme from '@/hooks/useColorScheme';
+import useColorScheme from '@/hooks/useTheme';
 import { colors } from '@/colors';
 import { Globe } from 'lucide-react-native';
 import tw from '@/tw';

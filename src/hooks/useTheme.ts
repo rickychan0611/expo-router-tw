@@ -2,7 +2,7 @@ import { useAppStore } from '@/stores';
 import tw from '@/tw';
 import { useAppColorScheme } from 'twrnc';
 
-export default function useColorScheme() {
+export default function useTheme() {
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
   const triggerThemeKey = useAppStore((state) => state.triggerThemeKey);
 

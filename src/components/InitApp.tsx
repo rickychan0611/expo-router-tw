@@ -2,11 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import { SplashScreen } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-
-import { useAppColorScheme } from "twrnc";
-import tw from "@/tw";
+import {Appearance} from 'react-native';
+import useTheme from "@/hooks/useTheme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,27 +23,30 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
     'mi-1000': require('../assets/fonts/MiSans-Heavy.ttf')
   });
 
-  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  // const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  // const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const { colorScheme, switchTheme, setColorScheme, isDarkColorScheme } = useTheme()
 
   const loadTheme = async () => {
-    const theme = await AsyncStorage.getItem('theme');
-    console.log("load theme", theme)
-    if (Platform.OS === 'web') {
-      // Adds the background color to the html element to prevent white background on overscroll.
-      document.documentElement.classList.add('bg-background');
-    }
-    if (!theme) {
-      AsyncStorage.setItem('theme', colorScheme + "");
-      setIsColorSchemeLoaded(true);
-      return;
-    }
-    const colorTheme = theme === 'dark' ? 'dark' : 'light';
-    if (true) {
-      setColorScheme(colorTheme);
-      setIsColorSchemeLoaded(true);
-      return;
-    }
+    console.log("colorScheme", Appearance.getColorScheme())
+    setColorScheme(Appearance.getColorScheme())
+    // const theme = await AsyncStorage.getItem('theme');
+    // console.log("load theme", theme)
+    // if (Platform.OS === 'web') {
+    //   // Adds the background color to the html element to prevent white background on overscroll.
+    //   document.documentElement.classList.add('bg-background');
+    // }
+    // if (!theme) {
+    //   AsyncStorage.setItem('theme', colorScheme + "");
+    //   setIsColorSchemeLoaded(true);
+    //   return;
+    // }
+    // const colorTheme = theme === 'dark' ? 'dark' : 'light';
+    // if (true) {
+    //   setColorScheme(colorTheme);
+    //   setIsColorSchemeLoaded(true);
+    //   return;
+    // }
   }
 
   const hideSplashScreen = async () => {
@@ -60,14 +60,14 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   React.useEffect(() => {
-    if (fontsLoaded && isColorSchemeLoaded) {
+    if (fontsLoaded) {
       console.log("fontsLoaded", fontsLoaded)
       hideSplashScreen()
     }
-  }, [fontsLoaded, isColorSchemeLoaded])
+  }, [fontsLoaded])
 
   return (
-    <>{isAppReady && children}</>
+    <>{fontsLoaded && children}</>
   )
 }
 

@@ -8,7 +8,7 @@ import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import InitApp from '@/components/InitApp';
 import { StatusBar, Text, TextInput, View } from 'react-native'
 import { useAppState } from "@/hooks/useAppState";
-import useColorScheme from "@/hooks/useColorScheme";
+import useColorScheme from "@/hooks/useTheme";
 
 // @ts-ignore
 Text.defaultProps = Text.defaultProps || {};
@@ -48,17 +48,17 @@ export default function RootLayoutNav() {
   useReactQueryDevTools(client);
 
   useDeviceContext(tw,
-    //   {
-    //   observeDeviceColorSchemeChanges: false,
-    //   initialColorScheme: `light`, 
-    // }
+    {
+      observeDeviceColorSchemeChanges: false,
+      initialColorScheme: `light`,
+    }
   );
 
   return (
     <QueryClientProvider client={client}>
       {up && <StatusBar barStyle="light-content" />}
       <InitApp>
-        <Stack key={tw.memoBuster}
+        <Stack
           screenOptions={{ headerShown: false }}
         />
       </InitApp>

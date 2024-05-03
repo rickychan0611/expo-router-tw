@@ -46,11 +46,12 @@ const SignIn = () => {
     <Container>
       <KeyboardAwareScrollView>
         <View style={tw`items-center p-4 sm:p-[100px] w-full`}>
-          <View style={tw`sm:bg-card mt-4 items-center w-full max-w-lg sm:shadow-xl sm:shadow-neutral-200 dark:shadow-none rounded sm:p-20`}>
+          <View style={tw`sm:bg-card sm:dark:bg-card-dark mt-4 items-center w-full max-w-lg sm:shadow-xl sm:shadow-neutral-200 dark:shadow-none rounded sm:p-20`}>
             <H4 style={tw`text-center`}>
               Sign in to your account
             </H4>
-            <Image source={logo} style={tw`mt-10 w-16 h-16 object-contain `} />
+            <Image source={logo} style={tw`mt-10 w-16 h-16`}
+              contentFit='contain' />
             <Muted style={tw`mt-4 text-center`}>
               Harmony Builds Wealth, Together We Flourish
             </Muted>
@@ -61,7 +62,7 @@ const SignIn = () => {
               value={phone}
               onChangeText={handleChange}
               onSubmitEditing={handleSubmit}
-              style={tw`mt-16`}
+              style={tw`mt-16 border`}
             />
 
             <Error style={tw`mt-2`}>

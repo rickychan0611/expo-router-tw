@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
 import { useAppColorScheme } from "twrnc";
 import { useEffect } from "react";
 import { useAppStore } from "@/stores";
-import useColorScheme from "@/hooks/useColorScheme";
+import useColorScheme from "@/hooks/useTheme";
 
 const Index = () => {
   

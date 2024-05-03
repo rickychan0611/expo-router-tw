@@ -6,7 +6,7 @@ import tw from '@/tw'
 import { colors } from '@/colors'
 import { useAppColorScheme } from 'twrnc';
 import { useAppStore } from '@/stores';
-import useColorScheme from '@/hooks/useColorScheme';
+import useColorScheme from '@/hooks/useTheme';
 
 export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
