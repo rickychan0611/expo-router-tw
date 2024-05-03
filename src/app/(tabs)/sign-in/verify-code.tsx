@@ -72,7 +72,7 @@ const SignIn = (props: Props) => {
         <BackAndTitle />
       </View>
       <KeyboardAwareScrollView>
-        <View style={tw`items-center p-4 sm:p-[100px] w-full`}>
+        <View style={tw`items-center p-4 sm:p-[100px] w-full mt-10 sm:mt-0`}>
           <View style={tw`sm:bg-card sm:dark:bg-card-dark mt-4 items-center w-full max-w-lg sm:shadow-xl sm:shadow-neutral-200 dark:shadow-none rounded sm:p-20`}>
 
             <H4 style={tw`mt-8 text-center`}>

@@ -1,11 +1,14 @@
-import { Redirect, Stack } from 'expo-router';
+import useTheme from '@/hooks/useTheme';
+import { Stack, useFocusEffect } from 'expo-router';
+import { StatusBar } from 'react-native';
 
 export default function Layout() {
+  const { isDarkColorScheme } = useTheme()
 
-  // if (userInfo) {
-  //   return <Redirect href="/" />
-  // }
-  
+  useFocusEffect(() => {
+    StatusBar.setBarStyle(isDarkColorScheme ? 'light-content' : 'dark-content')
+  })
+
   return (
     <Stack
       screenOptions={{

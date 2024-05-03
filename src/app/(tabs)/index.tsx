@@ -1,18 +1,24 @@
 import * as React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StatusBar, View } from 'react-native';
 import { H3, H5, Interact, P, Subtle } from '@/components/Typography';
 import { useGetUserInfo } from '@/api/queryHooks/useUserQueries';
 import Button from '@/components/Button';
-import { Center, ColCenter, Row, RowBetween } from '@/components/FlexViews';
+import { ColCenter, RowBetween } from '@/components/FlexViews';
 import AppBarContainer from '@/components/AppBarContainer';
 import PressableOpacity from '@/components/PressableOpacity';
 import Divider from '@/components/Divider';
 import Card from '@/components/Card';
 import tw from "@/tw";
 import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from 'expo-router';
 
 const TopBar = () => {
   const [t, i18n] = useTranslation("common")
+
+  useFocusEffect(() => {
+    StatusBar.setBarStyle('light-content')
+  })
+
   return (
     <>
       <AppBarContainer>

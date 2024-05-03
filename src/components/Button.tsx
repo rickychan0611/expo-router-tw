@@ -17,7 +17,7 @@ type Props = {
 
 const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, circle, onPress }, props) => {
   // default
-  let bgClass = tw`bg-primary dark:bg-primary-dark hover:bg-primary-900 border border-primary dark:border-primary-dark hover:border-primary-900`
+  let bgClass = tw`bg-primary dark:bg-primary-dark`
   let textClass = tw`text-primary-foreground dark:text-primary-dark-foreground`
   const cirlceClass = circle ? tw`rounded-full p-sm` : tw`rounded py-sm px-m`
 
