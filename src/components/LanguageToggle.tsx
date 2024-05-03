@@ -7,20 +7,20 @@ import useColorScheme from '@/hooks/useColorScheme';
 import { colors } from '@/colors';
 import { Globe } from 'lucide-react-native';
 import tw from '@/tw';
+import i18next from '@/locales/i18n';
 
 export function LanguageToggle() {
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  const [t, i18n] = useTranslation("common")
 
   useEffect(() => {
     const getSystemLanguage = async () => {
       const locale: string | null = await AsyncStorage.getItem("locale") || ""
       if (locale) {
-        await i18n.changeLanguage(locale)
+        await i18next.changeLanguage(locale)
       }
       else {
         const code = getLocales()[0].languageCode === "zh" ? "cn" : "en"
-        await i18n.changeLanguage(code)
+        await i18next.changeLanguage(code)
         await AsyncStorage.setItem("locale", code)
       }
     }
@@ -28,18 +28,18 @@ export function LanguageToggle() {
   }, [])
 
   const changeLanguage = async () => {
-    if (i18n.language === "cn") {
-      await i18n.changeLanguage("en")
+    if (i18next.language === "cn") {
+      await i18next.changeLanguage("en")
     }
-    else await i18n.changeLanguage("cn")
-    await AsyncStorage.setItem("locale", i18n.language)
+    else await i18next.changeLanguage("cn")
+    await AsyncStorage.setItem("locale", i18next.language)
   }
 
   return (
     <TouchableOpacity style={tw`text-sm flex flex-row flex-nowrap items-center p-1 rounded-lg mr-2`}
       onPress={async () => changeLanguage()} >
       <Globe color={colors.muted.DEFAULT} size={23} strokeWidth={1.25} />
-      <Text style={tw`text-muted`}>{i18n.language === "cn" ? "EN" : "中"}</Text>
+      <Text style={tw`text-muted`}>{i18next.language === "cn" ? "EN" : "中"}</Text>
     </TouchableOpacity>
   );
 }

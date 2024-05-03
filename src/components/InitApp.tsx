@@ -58,7 +58,7 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     loadTheme()
   }, [])
-  
+
   React.useEffect(() => {
     if (fontsLoaded && isColorSchemeLoaded) {
       console.log("fontsLoaded", fontsLoaded)
@@ -67,9 +67,7 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
   }, [fontsLoaded, isColorSchemeLoaded])
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <>{isAppReady && children}</>
-    </ThemeProvider>
+    <>{isAppReady && children}</>
   )
 }
 

@@ -7,7 +7,7 @@ export const colors = {
   },
   card: {
     DEFAULT: '#ffffff',
-    dark: '#2D2A2D'
+    dark: '#272629'
   },
   text: {
     DEFAULT: '#111112',
@@ -23,11 +23,11 @@ export const colors = {
   },
   divider: {
     DEFAULT: '#817C7D',
-    dark: '#817C7D'
+    dark: '#3d3a3a'
   },
   border: {
     DEFAULT: '#817C7D',
-    dark: '#817C7D'
+    dark: '#262424'
   },
   primary: {
     DEFAULT: '#832E33',
