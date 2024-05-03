@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import Container from '@/components/Container';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { BlockQuote, Code, H1, H2, H3, H4, Large, Lead, Muted, P, Small } from '@/components/Typography';
+import { BlockQuote, Code, H1, H2, H3, H4, Large, Lead, Muted, P1, Small } from '@/components/Typography';
 import { useGetUserInfo } from '@/api/queryHooks/useUserQueries';
 import Button from '@/components/Button';
 import { Row } from '@/components/FlexViews';
@@ -75,7 +75,7 @@ export default function Screen() {
             <Lead>Lead - {text}</Lead>
             <Muted>Muted - {text}</Muted>
             <Small>Small - {JSON.stringify(userInfo.data || {})}</Small>
-            <P style={tw`text-foreground leading-tight`}>P - {text}</P>
+            <P1 style={tw`text-foreground leading-tight`}>P - {text}</P1>
             <Button>
               <ThemeToggle />
             </Button>

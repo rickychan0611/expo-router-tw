@@ -62,7 +62,7 @@ export default function RootLayoutNav() {
       {up && <StatusBar barStyle="light-content" />}
       <InitApp>
         <Stack
-          key={themekey}
+          // key={themekey}
           screenOptions={{ headerShown: false }}
         />
       </InitApp>

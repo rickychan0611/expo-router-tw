@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, StatusBar, View } from 'react-native';
-import { H3, H5, Interact, P, Subtle } from '@/components/Typography';
+import { H3, H5, Interact, P1, Subtle } from '@/components/Typography';
 import { useGetUserInfo } from '@/api/queryHooks/useUserQueries';
 import Button from '@/components/Button';
 import { ColCenter, RowBetween } from '@/components/FlexViews';
@@ -56,34 +56,34 @@ export default function Home() {
 
             <RowBetween style={tw`flex-1 gap-4 w-full`}>
 
-              <ColCenter style={tw`flex-1 h-full`}>
+              <ColCenter style={tw`flex-1`}>
                 <Subtle style={tw`text-primary-600 dark:text-primary-200 w-full text-center`}>
                   Pending
                 </Subtle>
-                <ColCenter style={tw`bg-primary-200 dark:bg-primary-200 rounded p-sm mt-sm w-full`}>
-                  <P style={tw`text-primary-600 dark:text-primary-dark-600`}>
+                <ColCenter style={tw`bg-primary-100 dark:bg-neutral-1000 rounded p-sm mt-sm w-full h-10`}>
+                  <P1 style={tw`text-primary-600 dark:text-primary-300`}>
                     1
-                  </P>
+                  </P1>
                 </ColCenter>
               </ColCenter>
-
-              <ColCenter style={tw`flex-1 h-full`}>
-                <Subtle style={tw`text-neutral-900 w-full text-center`}>Delivering</Subtle>
-                <ColCenter style={tw`bg-neutral-50 rounded p-sm mt-sm w-full`}>
-                  <P style={tw`text-primary-600`}>
-                    12
-                  </P>
+              <ColCenter style={tw`flex-1`}>
+                <Subtle style={tw`text-black dark:text-white w-full text-center`}>
+                  Delivering
+                </Subtle>
+                <ColCenter style={tw`bg-neutral-50 dark:bg-neutral-1000 rounded p-sm mt-sm w-full h-10`}>
+                  <P1 style={tw`text-primary-600 dark:text-primary-300`}>
+                    1
+                  </P1>
                 </ColCenter>
               </ColCenter>
-
-              <ColCenter style={tw`flex-1 h-full`}>
-                <Subtle style={tw`text-primary-900 w-full text-center`}>
+              <ColCenter style={tw`flex-1`}>
+                <Subtle style={tw`text-black dark:text-white w-full text-center`}>
                   Finished
                 </Subtle>
-                <ColCenter style={tw`bg-neutral-50 rounded p-sm mt-sm w-full`}>
-                  <P style={tw`text-primary-600`}>
+                <ColCenter style={tw`bg-neutral-50 dark:bg-neutral-1000 rounded p-sm mt-sm w-full h-10`}>
+                  <P1 style={tw`text-primary-600 dark:text-primary-300`}>
                     1
-                  </P>
+                  </P1>
                 </ColCenter>
               </ColCenter>
 
