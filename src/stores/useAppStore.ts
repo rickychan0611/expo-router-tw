@@ -12,6 +12,8 @@ type AppState = {
   setStatsFilter: (filter: StateDays) => void;
   orderFilter: OrderFilter
   setOrderFilter: (filter: OrderFilter) => void;
+  openFilterMenu: boolean
+  setOpenFilterMenu: (open: boolean) => void
 };
 
 export const useAppStore = create<AppState>((set) => ({
@@ -25,4 +27,6 @@ export const useAppStore = create<AppState>((set) => ({
   setStatsFilter: (filter) => set({ statsFilter: filter }),
   orderFilter: undefined,
   setOrderFilter: (filter) => set({ orderFilter: filter }),
+  openFilterMenu: false,
+  setOpenFilterMenu: (open) => set({ openFilterMenu: open }),
 }));
