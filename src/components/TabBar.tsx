@@ -7,6 +7,9 @@ import { colors } from '@/colors'
 import { useAppColorScheme } from 'twrnc';
 import { useAppStore } from '@/stores';
 import useColorScheme from '@/hooks/useTheme';
+import { Row } from './FlexViews';
+import { LanguageToggle } from './LanguageToggle';
+import { ThemeToggle } from './ThemeToggle';
 
 export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
@@ -93,13 +96,16 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
                 <Text style={isFocused ? tw`text-primary dark:text-primary-dark text-sm` : tw`text-muted dark:text-muted-dark text-sm `}>
                   {label}
                 </Text>
-                {/* <Text style={tw`text-muted`}>useColorScheme(): {colorScheme}</Text> */}
               </View>
             </TouchableOpacity>
           );
         }
       })
       }
+      <Row style={tw`gap-1 pr-4`}>
+          <LanguageToggle />
+          <ThemeToggle />
+        </Row>
     </View >
   );
 }

@@ -62,7 +62,7 @@ const SignIn = () => {
               value={phone}
               onChangeText={handleChange}
               onSubmitEditing={handleSubmit}
-              style={tw`mt-16 border`}
+              style={tw`mt-8 w-full`}
             />
 
             <Error style={tw`mt-2`}>

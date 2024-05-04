@@ -15,6 +15,7 @@ import Animated, {
 import tw from '@/tw';
 import { useAppStore } from '@/stores';
 import BackDrop from './BackDrop';
+import { Dimensions, View } from 'react-native';
 
 type Props = {
   topBarHeight?: number
@@ -23,9 +24,17 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
 
   const openFilterMenu = useAppStore((state) => state.openFilterMenu)
   const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
-  const [menuHeight, setMenuHeight] = useState(0);
-  const translateY = useSharedValue(-300);
+  const [menuSize, setMenuSize] = useState({height: 0, width: 0});
+  const [translateX, setTranslateX] = useState(0)
+  const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  const [screenHeight, setScreenHeight] = useState(Dimensions.get('window').height);
+  const translateY = useSharedValue(-1000);
 
+  const updateScreenSize = () => {
+    setScreenWidth(Dimensions.get('window').width);
+    setScreenHeight(Dimensions.get('window').height);
+  };
+  // slide down the menu
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{
       translateY: withTiming(translateY.value, {
@@ -35,24 +44,38 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
     }],
   }));
 
+  // get the height of the menu
   const onLayout = (event: any) => {
-    const { height } = event.nativeEvent.layout;
-    setMenuHeight(height);
+    const { height, width } = event.nativeEvent.layout;
+    setMenuSize({height, width});
   };
 
+  // open the menu
   useEffect(() => {
     if (openFilterMenu) {
       translateY.value = 0
     }
-    if (!openFilterMenu && menuHeight) {
-      translateY.value = -menuHeight
+    if (!openFilterMenu && menuSize.height > 0) {
+      translateY.value = -menuSize.height
     }
-  }, [openFilterMenu])
+  }, [openFilterMenu, menuSize.height])
+
+  // center the menu
+  useEffect(() => {
+    setTranslateX((screenWidth / 2) - (menuSize.width / 2))
+  },[screenWidth, menuSize.width])
+
+  useEffect(() => {
+    const onChange = () => {
+      updateScreenSize();
+    };
+    Dimensions.addEventListener('change', onChange);
+  }, []);
 
   return (
     <>
       <BackDrop open={openFilterMenu} setOpen={setOpenFilterMenu} />
-      <Animated.View style={[tw`top-[${topBarHeight || 0}px] absolute z-49 w-full`, animatedStyle]}
+      <Animated.View style={[tw`absolute z-49 left-[${translateX}px] top-[${topBarHeight || 0}px]`, animatedStyle]}
         onLayout={onLayout}>
         <OrderFilterOptions />
       </Animated.View>

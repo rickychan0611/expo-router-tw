@@ -9,7 +9,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <View style={[tw`p-2 pb-10 flex-1 w-full justify-center items-center bg-background dark:bg-background-dark`]}>
-      <View style={[tw`w-full max-w-5xl`]}>
+      <View style={[tw`w-full max-w-6xl`]}>
         {children}
       </View>
     </View>
