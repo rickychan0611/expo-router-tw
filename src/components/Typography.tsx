@@ -33,7 +33,7 @@ export const H3 = ({ style, ...props }: Props) => {
 
 export const H4 = ({ style, ...props }: Props) => {
   return (
-    <Text {...props} style={[tw`font-mi-semi text-[20px] text-black dark:text-white`, style]}>
+    <Text {...props} style={[tw`font-mi-reg text-[20px] text-black dark:text-white`, style]}>
       {props.children}
     </Text>
   )

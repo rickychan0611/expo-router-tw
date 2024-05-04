@@ -57,6 +57,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-transform-export-namespace-from": "^7.24.1",
     "@tanstack/eslint-plugin-query": "^5.20.1",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/react-native": "^0.73.0",

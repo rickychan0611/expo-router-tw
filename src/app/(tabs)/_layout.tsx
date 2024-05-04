@@ -13,7 +13,7 @@ const RouterTabs = () => {
   return (
     <Tabs
       key={themeKey}
-      initialRouteName='index'
+      initialRouteName='orders'
       backBehavior='history'
       screenOptions={{
         headerShown: false,
@@ -21,14 +21,14 @@ const RouterTabs = () => {
       tabBar={props => <TabBar {...props} key={tw.memoBuster} router={router} />}
     >
       <Tabs.Screen
-        name='index'
-        options={{ title: 'Home' }}
-      />
-      <Tabs.Screen
         name='orders'
         options={{
           title: 'Order',
         }}
+      />
+      <Tabs.Screen
+        name='index'
+        options={{ title: 'Home' }}
       />
       <Tabs.Screen
         name='listings'

@@ -2,14 +2,14 @@ import React from 'react'
 import tw from '@/tw'
 import { TextInput as RNTextInput } from 'react-native'
 
-const TextInput = (props: any) => {
+const TextInput = ({ style, ...props }: any) => {
 
   return (
     <RNTextInput
-      {...props}
       style={[
-        tw`p-3 mt-10 w-full bg-input sm:bg-background rounded text-black placeholder:text-muted`,
-      ]}
+        tw`p-2 bg-input sm:bg-background rounded text-black placeholder:text-muted`,
+        , style]}
+      {...props}
       maxFontSizeMultiplier={1.5}
       placeholderTextColor={'#9CA3AF'}
     />

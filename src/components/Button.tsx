@@ -6,6 +6,7 @@ import * as Icons from './Icons';
 import tw from "@/tw";
 import getContrastColor from '@/utils/getContrastColor';
 import adjustBrightness from '@/utils/adjustBrightness';
+import adjustColorBrightness from '@/utils/adjustBrightness';
 
 type Props = {
   children?: React.ReactNode,
@@ -29,7 +30,7 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
 
   //custom color
   if (color) {
-    bgClass = tw`bg-[${color}] dark:bg-[${darkColor + ""}]`
+    bgClass = tw`bg-[${color}] dark:bg-[${darkColor ? darkColor : adjustColorBrightness(color, 0.2)}]`
     textClass = tw`text-[${getContrastColor(color)}] dark:text-[${getContrastColor(darkColor + "")}]`
     if (disabled) {
       bgClass = tw`bg-${color}-200`
