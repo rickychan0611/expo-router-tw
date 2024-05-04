@@ -24,6 +24,8 @@ const TopBar = () => {
   const [isShowing, setIsShowing] = React.useState(false)
   const [opacity, setOpacity] = React.useState(new Animated.Value(0))
   const [translateY, setTranslateY] = React.useState(new Animated.Value(-100))
+  const orderFilter = useAppStore((state) => state.orderFilter)
+  const setOrderFilter = useAppStore((state) => state.setOrderFilter)
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content')
@@ -31,27 +33,98 @@ const TopBar = () => {
 
   return (
     <>
-      <AppBarContainer>
-        <View style={tw`flex-1 w-full`}>
-          <H4 style={tw`text-white text-center`}>
-            All orders
-          </H4>
-          <RowBetween style={tw`mt-2 gap-2`}>
-            <Row style={tw`bg-input sm:bg-background rounded flex-1`}>
-              <View style={tw`pl-2`}>
-                <Search color={colors.muted.DEFAULT} />
-              </View>
-              <TextInput style={tw`flex-1`}
-                placeholder="Search Order"
-              />
-            </Row>
-            <PressableOpacity onPress={() => { }}>
-              <ListFilter style={tw`text-white`} />
+      <View style={tw`z-50`}>
+        <AppBarContainer>
+          <View style={tw`flex-1`}>
+            <H4 style={tw`text-white text-center`}>
+              All orders
+            </H4>
+            <RowBetween style={tw`mt-2 gap-2`}>
+              <Row style={tw`bg-input sm:bg-background rounded flex-1`}>
+                <View style={tw`pl-2`}>
+                  <Search color={colors.muted.DEFAULT} />
+                </View>
+                <TextInput style={tw`flex-1`}
+                  placeholder="Search Order"
+                />
+              </Row>
+              <PressableOpacity onPress={() => { }}>
+                <ListFilter style={tw`text-white`} />
+              </PressableOpacity>
+            </RowBetween>
+          </View>
+        </AppBarContainer >
+        <View style={tw`h-3 bg-primary dark:bg-primary-dark`} />
+      </View>
+
+
+      <View style={tw`items-center justify-center w-full absolute top-[100px] z-49`}>
+        <View style={tw`w-full max-w-6xl bg-card dark:bg-card-dark p-4 pb-6 rounded-b-m`}>
+          <RowBetween>
+            <H5 style={tw`text-neutral-900 dark:text-neutral-dark-900`}>
+              Filter
+            </H5>
+            <PressableOpacity onPress={() => { setOrderFilter(undefined) }}>
+              <Interact style={tw`text-muted dark:text-muted-dark`}>
+                Reset
+              </Interact>
             </PressableOpacity>
           </RowBetween>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Row style={tw`mt-2 gap-2`}>
+              <Button
+                color={orderFilter === "New" ? colors.primary[300] : colors.neutral[100]}
+                darkColor={orderFilter === "New" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+                onPress={() => setOrderFilter("New")}
+              >
+                New
+              </Button>
+              <Button
+                color={orderFilter === "Delivering" ? colors.primary[300] : colors.neutral[100]}
+                darkColor={orderFilter === "Delivering" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+                onPress={() => setOrderFilter("Delivering")}
+              >
+                Delivering
+              </Button>
+              <Button
+                color={orderFilter === "Delivered" ? colors.primary[300] : colors.neutral[100]}
+                darkColor={orderFilter === "Delivered" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+                onPress={() => setOrderFilter("Delivered")}
+              >
+                Delivered
+              </Button>
+              <Button
+                color={orderFilter === "Cancelled" ? colors.primary[300] : colors.neutral[100]}
+                darkColor={orderFilter === "Cancelled" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+                onPress={() => setOrderFilter("Cancelled")}
+              >
+                Cancelled
+              </Button>
+            </Row>
+          </ScrollView >
+          <Divider style={tw`my-4`} />
+          <H5>
+            Date
+          </H5>
+          <Row style={tw`mt-4 gap-4`}>
+            <Interact style={tw`text-primary-800 dark:text-primary-dark-800 w-15`}>
+              From
+            </Interact>
+            <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
+              placeholder="Search Order" />
+          </Row>
+          <Row style={tw`mt-4 gap-4`}>
+            <Interact style={tw`text-primary-800 dark:text-primary-dark-800 w-15`}>
+              To
+            </Interact>
+            <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
+              placeholder="Search Order" />
+          </Row>
         </View>
-      </AppBarContainer >
-      <View style={tw`h-3 bg-primary dark:bg-primary-dark`} />
+      </View >
+
+
     </>
   )
 }
@@ -95,8 +168,6 @@ const Orders = () => {
                 <MoreHorizontal color={colors.neutral[900]} />
               </Center>
             </Row>
-
-
           </Card>
         </Container>
       </ScrollView>

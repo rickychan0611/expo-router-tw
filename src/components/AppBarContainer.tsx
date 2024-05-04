@@ -26,41 +26,41 @@ const AppBarContainer = ({ children }: Props) => {
   const insets = useSafeAreaInsets()
   const [t, i18n] = useTranslation("common")
 
-  useEffect(() => {
-    const getSystemLanguage = async () => {
-      const locale: string | null = await AsyncStorage.getItem("locale") || ""
-      if (locale) {
-        await i18n.changeLanguage(locale)
-      }
-      else {
-        const code = getLocales()[0].languageCode === "zh" ? "cn" : "en"
-        await i18n.changeLanguage(code)
-        await AsyncStorage.setItem("locale", code)
-      }
-    }
+  // useEffect(() => {
+  //   const getSystemLanguage = async () => {
+  //     const locale: string | null = await AsyncStorage.getItem("locale") || ""
+  //     if (locale) {
+  //       await i18n.changeLanguage(locale)
+  //     }
+  //     else {
+  //       const code = getLocales()[0].languageCode === "zh" ? "cn" : "en"
+  //       await i18n.changeLanguage(code)
+  //       await AsyncStorage.setItem("locale", code)
+  //     }
+  //   }
 
-    getSystemLanguage()
-  }, [])
+  //   getSystemLanguage()
+  // }, [])
 
-  const changeLanguage = async () => {
-    if (i18n.language === "cn") {
-      await i18n.changeLanguage("en")
-    }
-    else await i18n.changeLanguage("cn")
-    await AsyncStorage.setItem("locale", i18n.language)
-  }
+  // const changeLanguage = async () => {
+  //   if (i18n.language === "cn") {
+  //     await i18n.changeLanguage("en")
+  //   }
+  //   else await i18n.changeLanguage("cn")
+  //   await AsyncStorage.setItem("locale", i18n.language)
+  // }
 
 
   return (
-    <View style={[tw`bg-primary dark:bg-primary-dark z-50 w-full flex flex-row justify-between items-center px-2 lg:px-10`, { paddingTop: insets.top + 8 }]}
+    <View style={[tw`bg-primary dark:bg-primary-dark z-50 w-full flex flex-row justify-between items-center px-sm`, { paddingTop: insets.top + 8 }]}
     >
       <RowBetween style={tw`flex-1 gap-4`}>
         {children}
 
-        {/* <Row style={tw`gap-1`}>
+        <Row style={tw`gap-1`}>
           <LanguageToggle />
           <ThemeToggle />
-        </Row> */}
+        </Row>
 
       </RowBetween>
     </View >

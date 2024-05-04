@@ -35,3 +35,4 @@ export interface Order {
 }
 
 export type StateDays = "Yesterday" | "Last 7 days" | "Last 30 days" | "This month" | "This year" | "All time";
+export type OrderFilter = "New" | "Delivering" | "Cancelled" | "Delivered" | undefined;
