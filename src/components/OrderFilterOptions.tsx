@@ -39,11 +39,14 @@ const OrderFilterOptions = () => {
       </RowBetween>
 
       <ScrollView horizontal>
-        <Row style={tw`flex-1 mt-2 gap-2 pb-6 border-b border-neutral-200 dark:border-muted-dark`}>
+        <Row style={tw`flex-1 mt-2 gap-1 pb-6 border-b border-neutral-200 dark:border-muted-dark`}>
           <Button
             color={orderFilter === "New" ? colors.primary[300] : colors.neutral[100]}
             darkColor={orderFilter === "New" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
-            onPress={() => setOrderFilter("New")}
+            style={tw`rounded-full`}
+            onPress={() => {
+              setOrderFilter("New")
+            }}
           >
             New
           </Button>
@@ -51,6 +54,7 @@ const OrderFilterOptions = () => {
             color={orderFilter === "Delivering" ? colors.primary[300] : colors.neutral[100]}
             darkColor={orderFilter === "Delivering" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
             onPress={() => setOrderFilter("Delivering")}
+            style={tw`rounded-full`}
           >
             Delivering
           </Button>
@@ -58,6 +62,7 @@ const OrderFilterOptions = () => {
             color={orderFilter === "Delivered" ? colors.primary[300] : colors.neutral[100]}
             darkColor={orderFilter === "Delivered" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
             onPress={() => setOrderFilter("Delivered")}
+            style={tw`rounded-full`}
           >
             Delivered
           </Button>
@@ -65,6 +70,7 @@ const OrderFilterOptions = () => {
             color={orderFilter === "Cancelled" ? colors.primary[300] : colors.neutral[100]}
             darkColor={orderFilter === "Cancelled" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
             onPress={() => setOrderFilter("Cancelled")}
+            style={tw`rounded-full`}
           >
             Cancelled
           </Button>
@@ -87,7 +93,7 @@ const OrderFilterOptions = () => {
         <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
           placeholder="Search Order" />
       </Row>
-      <Button style={tw`mt-8`}>Submit</Button>
+      <Button style={tw`mt-8`}>Apply</Button>
     </View>
   )
 }

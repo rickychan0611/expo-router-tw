@@ -21,7 +21,7 @@ const Orders = () => {
   const [listHeight, setListHeight] = useState(0)
   const { height } = useWindowDimensions();
   const [sectionData, setSectionData] = useState<any>([])
-  
+
   // fetch data
   const [queryParams, setQueryParams] = useState<useGetOrderListTypes>({
     status: "all",
@@ -95,20 +95,18 @@ const Orders = () => {
 
   return (
     <View style={tw`flex-1 bg-background dark:bg-background-dark`}>
-      <OrdersScreenTopBar setQueryParams={setQueryParams}/>
-      <View style={[tw`w-full items-center bg-background dark:bg-background-dark `]}>
+      <OrdersScreenTopBar setQueryParams={setQueryParams} />
 
         {/* set setionlist container height for scrolling */}
-        <View style={[tw`w-full max-w-6xl`, { height: listHeight }]}>
+        <View style={[tw`w-full bg-background dark:bg-background-dark`, { height: listHeight }]}>
           <SectionList
-            contentContainerStyle={tw`pb-10`}
+            contentContainerStyle={tw`pb-10 w-full max-w-6xl mx-auto`}
             stickySectionHeadersEnabled={false}
             sections={sectionData}
             keyExtractor={(item, index) => item.id + index + ""}
             renderItem={renderSection}
             renderSectionHeader={renderSectionHeader}
           />
-        </View>
 
       </View>
     </View>

@@ -18,7 +18,7 @@ type Props = {
   circle?: boolean
   color?: string,
   darkColor?: string,
-  full?: boolean
+  full?: boolean,
 }
 
 const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, circle, onPress, color, darkColor, full }, props) => {
