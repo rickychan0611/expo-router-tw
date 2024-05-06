@@ -1,5 +1,5 @@
 import tw from "@/tw";
-import { Text, View, StatusBar, ScrollView, FlatList, SectionList } from "react-native";
+import { Text, View, StatusBar, ScrollView, FlatList, SectionList, Dimensions, useWindowDimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useAppStore } from "@/stores";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,9 @@ import moment from "moment";
 
 const TopBar = () => {
   const [t, i18n] = useTranslation("common")
-  const [topBarHeight, setTopBarHeight] = useState(0);
+  const topBarHeight = useAppStore((state) => state.topBarHeight)
+  const setTopBarHeight = useAppStore((state) => state.setTopBarHeight)
+
   const openFilterMenu = useAppStore((state) => state.openFilterMenu)
   const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
 
@@ -70,6 +72,8 @@ const TopBar = () => {
 
 const Orders = () => {
   const screen = useScreenSize()
+  const topBarHeight = useAppStore((state) => state.topBarHeight)
+  const tabBarHeight = useAppStore((state) => state.tabBarHeight)
 
   // fetch data
   const [params, setParams] = useState<useGetOrderListTypes>({
@@ -87,28 +91,24 @@ const Orders = () => {
   const [sectionData, setSectionData] = useState<any>([])
 
   const convertSectionData = (data: Order[]) => {
-    return data.reduce((result, order) => {
-      const title = moment(order.place_time).startOf('day').format('YYYY-MM-DD')
-      const existing = result.find(item => item.title === title)
-      if (existing) {
-        existing.data.push(order)
-      } else {
-        result.push({
-          title,
-          data: [order]
-        })
-      }
-      return result
-    }, [] as SectionListData)
+    if (data?.length) {
+      return data.reduce((result, order) => {
+        const title = moment(order.place_time).startOf('day').format('YYYY-MM-DD')
+        const existing = result.find(item => item.title === title)
+        if (existing) {
+          existing.data.push(order)
+        } else {
+          result.push({
+            title,
+            data: [order]
+          })
+        }
+        return result
+      }, [] as SectionListData)
+    }
   }
 
 
-  useEffect(() => {
-    if (orders.data) {
-      const newData: SectionListData = convertSectionData(orders.data)
-      setSectionData(newData)
-    }
-  }, [orders.data])
 
   const renderListItem = ({ item }: { item: Order }) => {
     return (
@@ -134,13 +134,31 @@ const Orders = () => {
     )
   }
 
+  const [listHeight, setListHeight] = useState(0)
+  const { height, width } = useWindowDimensions();
+
+
+  useEffect(() => {
+    setListHeight(height - (topBarHeight + tabBarHeight) + (StatusBar.currentHeight || 0))
+  }, [topBarHeight, tabBarHeight, height])
+
+
+  useEffect(() => {
+    if (orders?.data?.length && topBarHeight && tabBarHeight) {
+      const newData: SectionListData | undefined = convertSectionData(orders.data)
+      setSectionData(newData)
+    }
+  }, [orders.data, topBarHeight, tabBarHeight])
+
   return (
     <View style={tw`flex-1 bg-background dark:bg-background-dark`}>
       <TopBar />
-      <ScrollView>
-        <Container>
-          <View style={[tw`flex-row flex-wrap m-[-8px]`]}>
+      <View style={[tw`w-full items-center bg-background dark:bg-background-dark `]}>
+        {
+          <View style={[tw`w-full max-w-6xl`, { height: listHeight }]}>
             <SectionList
+              contentContainerStyle={tw`pb-10`}
+              stickySectionHeadersEnabled={false}
               sections={sectionData}
               keyExtractor={(item, index) => item.id + index + ""}
               renderItem={renderSection}
@@ -152,9 +170,8 @@ const Orders = () => {
                 </View>
               )}
             />
-          </View>
-        </Container>
-      </ScrollView>
+          </View>}
+      </View>
     </View>
   );
 }

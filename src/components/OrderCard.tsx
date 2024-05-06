@@ -18,7 +18,6 @@ const OrderCard = ({ item }: Props) => {
   const order_items: any = JSON.parse(item?.order_items_str || "[]")
   const URL = process.env.EXPO_PUBLIC_HOST_URL + "/"
 
-  console.log("order_items", order_items)
   return (
     <View style={tw`w-full sm:w-1/2 md:w-1/2 lg:w-1/3 p-2 `}>
       <Card style={tw``} >
@@ -46,10 +45,10 @@ const OrderCard = ({ item }: Props) => {
           {order_items?.[0] && order_items.map((orderItem: OrderItem, i: number) => {
             const pic: any = JSON.parse(orderItem.product_pic)
             const uri = URL + '/storage/' + pic[0]
-            console.log(uri)
             if (i < 6) return (
               <View style={tw`flex-1 bg-white h-[52px] max-w-[52px] rounded`} key={i}>
-                <Image style={tw`w-full h-full object-cover`}
+                <Image style={tw`w-full h-full`}
+                  contentFit="cover"
                   source={{ uri }}
                 />
               </View>

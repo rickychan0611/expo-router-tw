@@ -15,6 +15,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
   const insets = useSafeAreaInsets();
   const count = useAppStore((state) => state.count);
   const { isDarkColorScheme } = useColorScheme();
+  const setTabBarHeight = useAppStore((state) => state.setTabBarHeight);
 
   const Icon = (props: any) => {
     const label = props.label
@@ -25,14 +26,15 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
     return <Component size={30} />
   }
 
-  // const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-  // // const colorScheme = useColorScheme();
-  // useEffect(() => {
-  //   console.log("xxxxxxxx", tw.memoBuster)
-  // }, [colorScheme, router.pathname])
+  const onLayout = (event: any) => {
+    const { height } = event.nativeEvent.layout;
+    console.log("xxxxxxxxxxxx", height)
+    setTabBarHeight(height);
+  };
 
   return (
-    <View style={[tw`flex-row bg-card dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}>
+    <View style={[tw`flex-row bg-card dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}
+      onLayout={onLayout}>
       {state.routes.map((route: any, index: number) => {
 
         const { options } = descriptors[route.key];
@@ -103,9 +105,9 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
       })
       }
       <Row style={tw`gap-1 pr-4`}>
-          <LanguageToggle />
-          <ThemeToggle />
-        </Row>
+        <LanguageToggle />
+        <ThemeToggle />
+      </Row>
     </View >
   );
 }

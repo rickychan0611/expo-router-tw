@@ -14,6 +14,10 @@ type AppState = {
   setOrderFilter: (filter: OrderFilter) => void;
   openFilterMenu: boolean
   setOpenFilterMenu: (open: boolean) => void
+  topBarHeight: number
+  setTopBarHeight: (height: number) => void
+  tabBarHeight: number
+  setTabBarHeight: (height: number) => void
 };
 
 export const useAppStore = create<AppState>((set) => ({
@@ -29,4 +33,8 @@ export const useAppStore = create<AppState>((set) => ({
   setOrderFilter: (filter) => set({ orderFilter: filter }),
   openFilterMenu: false,
   setOpenFilterMenu: (open) => set({ openFilterMenu: open }),
+  topBarHeight: 0,
+  setTopBarHeight: (height) => set({ topBarHeight: height }),
+  tabBarHeight: 0,
+  setTabBarHeight: (height) => set({ tabBarHeight: height }),
 }));
