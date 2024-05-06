@@ -1,4 +1,4 @@
-export interface useGetOrderList {
+export interface useGetOrderListTypes {
   status: "all" | "new" | "delivering" | "delivered" | "cancelled" | "unsettled" | "settled";
   page: number;
   pagesize: number;
@@ -33,6 +33,41 @@ export interface Order {
   buyer_str: string
   order_items_str: string
 }
+
+export interface OrderItem {
+  supply_order_id: number
+  user_id: number
+  supplier_id: number
+  b2b_product_id: number
+  product_pic: string
+  product_name_cn: string
+  product_name_en: string
+  product_description_cn: string
+  product_description_en: string
+  product_packing_info: string
+  product_id_of_supplier: any
+  product_category_id: number
+  product_category_name_en: string
+  product_category_name_cn: string
+  product_categories: string
+  product_supplier: string
+  supply_product_id: string
+  product_price: string
+  product_quantity: number
+  product_raw_amount: number
+  tax_id: number
+  gst_rate: number
+  pst_rate: number
+  gst_amount: number
+  pst_amount: number
+  tax_amount: number
+  product_total_amount: number
+  updated_at: string
+  created_at: string
+  id: number
+  order_item_id: number
+}
+
 
 export type StateDays = "Yesterday" | "Last 7 days" | "Last 30 days" | "This month" | "This year" | "All time";
 export type OrderFilter = "New" | "Delivering" | "Cancelled" | "Delivered" | undefined;
