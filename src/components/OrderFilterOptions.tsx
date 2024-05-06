@@ -39,7 +39,7 @@ const OrderFilterOptions = () => {
       </RowBetween>
 
       <ScrollView horizontal>
-        <Row style={tw`w-[${screenWidth}px] max-w-[465px] flex-1 mt-2 gap-2 pb-6 border-b border-neutral-200 dark:border-muted-dark`}>
+        <Row style={tw`flex-1 mt-2 gap-2 pb-6 border-b border-neutral-200 dark:border-muted-dark`}>
           <Button
             color={orderFilter === "New" ? colors.primary[300] : colors.neutral[100]}
             darkColor={orderFilter === "New" ? colors.primary.dark.DEFAULT : colors.neutral[800]}

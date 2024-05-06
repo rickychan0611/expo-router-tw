@@ -28,7 +28,6 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
 
   const onLayout = (event: any) => {
     const { height } = event.nativeEvent.layout;
-    console.log("xxxxxxxxxxxx", height)
     setTabBarHeight(height);
   };
 

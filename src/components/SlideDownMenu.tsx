@@ -11,11 +11,13 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   Easing,
+  runOnJS,
 } from 'react-native-reanimated';
 import tw from '@/tw';
 import { useAppStore } from '@/stores';
 import BackDrop from './BackDrop';
 import { Dimensions, View } from 'react-native';
+import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 type Props = {
   topBarHeight?: number
@@ -24,7 +26,7 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
 
   const openFilterMenu = useAppStore((state) => state.openFilterMenu)
   const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
-  const [menuSize, setMenuSize] = useState({height: 0, width: 0});
+  const [menuSize, setMenuSize] = useState({ height: 0, width: 0 });
   const [translateX, setTranslateX] = useState(0)
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const [screenHeight, setScreenHeight] = useState(Dimensions.get('window').height);
@@ -47,7 +49,7 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
   // get the height of the menu
   const onLayout = (event: any) => {
     const { height, width } = event.nativeEvent.layout;
-    setMenuSize({height, width});
+    setMenuSize({ height, width });
   };
 
   // open the menu
@@ -63,7 +65,7 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
   // center the menu
   useEffect(() => {
     setTranslateX((screenWidth / 2) - (menuSize.width / 2))
-  },[screenWidth, menuSize.width])
+  }, [screenWidth, menuSize.width])
 
   useEffect(() => {
     const onChange = () => {
@@ -72,13 +74,26 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
     Dimensions.addEventListener('change', onChange);
   }, []);
 
+  const onClose = () => {
+    setOpenFilterMenu(false)
+  }
+
+  const fling = Gesture.Fling()
+    .direction(Directions.UP)
+    .onStart(() => {
+      runOnJS(onClose)()
+    })
+
+
   return (
     <>
       <BackDrop open={openFilterMenu} setOpen={setOpenFilterMenu} />
-      <Animated.View style={[tw`absolute z-49 left-[${translateX}px] top-[${topBarHeight || 0}px]`, animatedStyle]}
-        onLayout={onLayout}>
-        <OrderFilterOptions />
-      </Animated.View>
+      <GestureDetector gesture={fling}>
+        <Animated.View style={[tw`absolute z-49 left-[${translateX}px] top-[${topBarHeight || 0}px]`, animatedStyle]}
+          onLayout={onLayout}>
+          <OrderFilterOptions />
+        </Animated.View>
+      </GestureDetector>
     </>
   )
 }
