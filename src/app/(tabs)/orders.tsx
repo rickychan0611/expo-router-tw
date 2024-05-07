@@ -1,13 +1,15 @@
 import tw from "@/tw";
-import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, TouchableOpacity } from "react-native";
+import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useAppStore } from "@/stores";
 import OrderCard from "@/components/OrderCard";
 import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";
 import { Order } from "@/interfaces/productTypes";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import moment from "moment";
 import OrdersScreenTopBar from "@/components/OrdersScreenTopBar";
+import { useOrdersStore } from "@/stores/useOrdersStore";
+import { useAppStore } from "@/stores";
+import { colors } from "@/colors";
 
 type SectionListData = {
   title: string
@@ -16,35 +18,47 @@ type SectionListData = {
 
 const Orders = () => {
   const screen = useScreenSize()
-  const topBarHeight = useAppStore((state) => state.topBarHeight)
-  const tabBarHeight = useAppStore((state) => state.tabBarHeight)
   const [listHeight, setListHeight] = useState(0)
   const { height } = useWindowDimensions();
-  const orderListData = useAppStore((state) => state.orderListData)
-  const setOrderListData = useAppStore((state) => state.setOrderListData)
+
+  const tabBarHeight = useAppStore((state) => state.tabBarHeight)
+  const topBarHeight = useOrdersStore((state) => state.topBarHeight)
+  const orderSectionData = useOrdersStore((state) => state.orderSectionData)
+  const setOrderSectionData = useOrdersStore((state) => state.setOrderSectionData)
 
   // fetch data
   // const orders = useOrders()
   const orders = useInfiniteQueryOrders()
 
-  const convertSectionData = async (data: Order[]): Promise<SectionListData> => {
-    const sectionListData: SectionListData = []
+  // Define the convertSectionData function
+  const convertSectionData = async (data: Order[]) => {
+    const sectionListData = [];
     if (data) {
       for (const order of data) {
-        const title = moment(order.place_time).startOf('day').format('YYYY-MM-DD')
-        const existing = sectionListData.find(item => item.title === title)
-        if (existing) {
-          existing.data.push(order)
+        const title = moment(order.place_time).startOf('day').format('YYYY-MM-DD');
+        const existingIndex = sectionListData.findIndex((item) => item.title === title);
+        if (existingIndex !== -1) {
+          sectionListData[existingIndex].data.push(order);
         } else {
           sectionListData.push({
             title,
-            data: [order]
-          })
+            data: [order],
+          });
         }
       }
     }
-    return Promise.resolve(sectionListData)
-  }
+    return Promise.resolve(sectionListData);
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (!orders?.pages?.length) return
+      const ordersArray: any = orders.pages
+      const flatmapped = ordersArray.flatMap((page: any) => page.data)
+      const newSections = await convertSectionData(flatmapped);
+      setOrderSectionData(newSections)
+    })()
+  }, [orders.pages])
 
   const renderListItem = ({ item }: { item: Order }) => {
     return (
@@ -78,28 +92,19 @@ const Orders = () => {
     </View>
   )
 
+  const renderFooter = () => {
+    return (
+      <View style={tw`mt-4`}>
+        {orders?.isFetchingNextPage && <ActivityIndicator color={colors.primary[500]} />}
+      </View>
+    )
+  }
+
   useEffect(() => {
     setListHeight(height - (topBarHeight + tabBarHeight) + (StatusBar.currentHeight || 0))
   }, [topBarHeight, tabBarHeight, height])
 
 
-  useEffect(() => {
-    (async () => {
-      console.log("cccccccc", orders)
-      console.log("ccccccxxxxxxcc", orders?.data?.pages)
-      if (orders?.data?.pages?.length) {
-        const allOrders = orders.data?.pages.flatMap(page => page.data) ?? [];
-        console.log("allOrders", allOrders)
-        // const newData: SectionListData | undefined = await convertSectionData(allOrders)
-        // setOrderListData(newData)
-      }
-      else setOrderListData([])
-    })()
-  }, [orders?.data?.pages])
-
-  // useEffect(() => {
-  //   setOrderListData([])
-  // }, [])
 
   return (
     <View style={tw`flex-1 bg-background dark:bg-background-dark`}>
@@ -107,22 +112,18 @@ const Orders = () => {
 
       {/* set setionlist container height for scrolling */}
       <View style={[tw`w-full bg-background dark:bg-background-dark`, { height: listHeight }]}>
-        <TouchableOpacity onPress={() => orders.fetchNextPage()}>
-          <Text style={tw`text-white`}>{"fetchNextPage"}</Text>
-        </TouchableOpacity>
-        <Text style={tw`text-white`}>{JSON.stringify(orders?.isFetching)}</Text>
-        <Text style={tw`text-white`}>{JSON.stringify(orders?.isLoading)}</Text>
-        <Text style={tw`text-white`}>{JSON.stringify(orders?.error)}</Text>
         <SectionList
           initialNumToRender={50}
           contentContainerStyle={tw`pb-10 w-full max-w-6xl mx-auto`}
           stickySectionHeadersEnabled={false}
-          sections={orderListData || []}
+          sections={orderSectionData || []}
           keyExtractor={(item, index) => item.id + index + ""}
           renderItem={renderSection}
           renderSectionHeader={renderSectionHeader}
-          onEndReached={() => {
-          }}
+          onEndReached={() => orders.fetchNextPage()}
+          ListFooterComponent={renderFooter}
+          onRefresh={() => orders.refetch()}
+          refreshing={orders.isFetching}
         />
 
       </View>

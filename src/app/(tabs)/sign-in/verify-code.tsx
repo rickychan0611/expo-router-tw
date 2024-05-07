@@ -11,8 +11,7 @@ import BackAndTitle from '@/components/BackAndTitle'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api_user } from '@/api/api_user'
 import tw from "@/tw"
-import { useOrders } from '@/api/queryHooks/useProductQueries'
-import { useAppStore } from '@/stores'
+import { useOrdersStore } from '@/stores'
 
 type Props = {}
 
@@ -22,7 +21,7 @@ const SignIn = (props: Props) => {
   const [count, setCount] = useState(5);
   const [otp, setOtp] = useState("");
   const [err, setErr] = useState("")
-  const orderFilterQueryParams = useAppStore((state) => state.orderFilterQueryParams)
+  const orderFilterQueryParams = useOrdersStore((state) => state.orderFilterQueryParams)
 
   useEffect(() => {
     const intervalId = setInterval(() => {

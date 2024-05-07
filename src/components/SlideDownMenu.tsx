@@ -14,7 +14,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import tw from '@/tw';
-import { useAppStore } from '@/stores';
+import { useOrdersStore } from '@/stores';
 import BackDrop from './BackDrop';
 import { Dimensions, View } from 'react-native';
 import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -24,8 +24,8 @@ type Props = {
 }
 const SlideDownMenu = ({ topBarHeight }: Props) => {
 
-  const openFilterMenu = useAppStore((state) => state.openFilterMenu)
-  const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
+  const openFilterMenu = useOrdersStore((state) => state.openFilterMenu)
+  const setOpenFilterMenu = useOrdersStore((state) => state.setOpenFilterMenu)
   const [menuSize, setMenuSize] = useState({ height: 0, width: 0 });
   const [translateX, setTranslateX] = useState(0)
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);

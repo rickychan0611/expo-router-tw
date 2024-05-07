@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const URL = process.env.EXPO_PUBLIC_HOST_URL
 
 export const GET = async (api: string, params?: any) => {
-  console.log("GGGGGG", api, params)
   const userToken = await AsyncStorage.getItem("userToken")
   try {
     const response = await axios.get(URL + api,
@@ -15,10 +14,9 @@ export const GET = async (api: string, params?: any) => {
           "Key-value": "K1RlBHKFQN0ujNuuQOOhoHA9r12QXTOf"
         }
       })
-    return response.data.data
+    return response.data
   }
   catch (err: any) {
-    //console.warn("get apiCalls err", api, params, err)
     return err
   }
 }

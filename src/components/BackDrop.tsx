@@ -14,7 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import tw from '@/tw';
 import { Dimensions, Pressable } from 'react-native';
-import { useAppStore } from '@/stores';
+import { useOrdersStore } from '@/stores';
 import { BlurView } from 'expo-blur';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 }
 
 const BackDrop = ({ setOpen, open }: Props) => {
-  const openFilterMenu = useAppStore((state) => state.openFilterMenu)
+  const openFilterMenu = useOrdersStore((state) => state.openFilterMenu)
 
   const screenHeight = Dimensions.get('window').height;
   const [disabled, setDisabled] = useState(false);

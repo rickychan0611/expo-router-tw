@@ -2,7 +2,7 @@ import tw from "@/tw";
 import { Text, View, StyleSheet, Pressable, StatusBar, ScrollView, Animated, Dimensions } from "react-native";
 import { useAppColorScheme } from "twrnc";
 import React, { useEffect, useState } from "react";
-import { useAppStore } from "@/stores";
+import { useOrdersStore } from "@/stores";
 import useColorScheme from "@/hooks/useTheme";
 import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "expo-router";
@@ -17,25 +17,27 @@ import { ListFilter, MoreHorizontal, Search } from "lucide-react-native";
 import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
 import Divider from "@/components/Divider";
-import { useOrders } from "@/api/queryHooks/useProductQueries";
+import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";
 import { OrderFilterQueryParams } from "@/interfaces/productTypes";
 
 type Props = {
 }
 
 const OrderFilterOptions = () => {
-  const orderFilter = useAppStore((state) => state.orderFilter)
-  const setOrderFilter = useAppStore((state) => state.setOrderFilter)
-  const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
+  const orderFilter = useOrdersStore((state) => state.orderFilter)
+  const setOrderFilter = useOrdersStore((state) => state.setOrderFilter)
+  const setOpenFilterMenu = useOrdersStore((state) => state.setOpenFilterMenu)
   const screenWidth = Dimensions.get('window').width
 
-  const orderFilterQueryParams = useAppStore((state) => state.orderFilterQueryParams)
-  const setOrderFilterQueryParams = useAppStore((state) => state.setOrderFilterQueryParams)
+  const orderFilterQueryParams = useOrdersStore((state) => state.orderFilterQueryParams)
+  const setOrderFilterQueryParams = useOrdersStore((state) => state.setOrderFilterQueryParams)
+  const orders = useInfiniteQueryOrders()
 
   const handleApplyFilter = () => {
     const temp: OrderFilterQueryParams = { ...orderFilterQueryParams }
     temp.status = orderFilter
     setOrderFilterQueryParams(temp)
+    orders.refetch()
     setOpenFilterMenu(false)
   }
 

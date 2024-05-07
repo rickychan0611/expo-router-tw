@@ -1,7 +1,7 @@
 import React from "react";
 import tw from "@/tw";
 import { View, StatusBar } from "react-native";
-import { useAppStore } from "@/stores";
+import { useOrdersStore } from "@/stores";
 import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "expo-router";
 import AppBarContainer from "@/components/AppBarContainer";
@@ -15,11 +15,11 @@ import SlideDownMenu from "@/components/SlideDownMenu";
 
 const OrdersScreenTopBar = ( ) => {
   const [t, i18n] = useTranslation("common")
-  const topBarHeight = useAppStore((state) => state.topBarHeight)
-  const setTopBarHeight = useAppStore((state) => state.setTopBarHeight)
+  const topBarHeight = useOrdersStore((state) => state.topBarHeight)
+  const setTopBarHeight = useOrdersStore((state) => state.setTopBarHeight)
 
-  const openFilterMenu = useAppStore((state) => state.openFilterMenu)
-  const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
+  const openFilterMenu = useOrdersStore((state) => state.openFilterMenu)
+  const setOpenFilterMenu = useOrdersStore((state) => state.setOpenFilterMenu)
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content')

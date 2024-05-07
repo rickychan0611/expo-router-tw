@@ -1,6 +1,5 @@
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 import { api_products } from './api_products'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const productKeys = createQueryKeyStore({
   order: {
