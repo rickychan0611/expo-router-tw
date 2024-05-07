@@ -52,7 +52,7 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      if (!orders?.pages?.length) return
+      if (!orders?.pages?.[0]?.data?.[0]) return
       const ordersArray: any = orders.pages
       const flatmapped = ordersArray.flatMap((page: any) => page.data)
       const newSections = await convertSectionData(flatmapped);

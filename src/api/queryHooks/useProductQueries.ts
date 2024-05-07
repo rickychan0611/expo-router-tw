@@ -32,5 +32,5 @@ export const useInfiniteQueryOrders = () => {
     },
   })
 
-  return { ...res, pages: res.data?.pages as Order[] }
+  return { ...res, pages: res.data?.pages }
 }

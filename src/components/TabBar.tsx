@@ -33,7 +33,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
   };
 
   return (
-    <View style={[tw`flex-row bg-card dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}
+    <View style={[tw`justify-between w-full flex-row bg-card dark:bg-card-dark`, { paddingBottom: insets?.bottom || 6 }]}
       onLayout={onLayout}>
       {state.routes.map((route: any, index: number) => {
 
@@ -85,10 +85,10 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{ flex: 1 }}
+              style={tw`flex-1 items-center justify-center`}
               key={index}
             >
-              <View style={tw`flex-col mt-2 gap-1 justify-center items-center `}
+              <View style={tw`flex-col mt-2 gap-1 items-center `}
               >
                 {label === "Home" ? <LayoutDashboard color={color} size={30} key={tw.memoBuster + index} /> :
                   label === "Order" ? <ClipboardList color={color} size={30} /> :
