@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Blocks, Home, UserRound, ScrollText, LayoutDashboard, ClipboardList, Boxes, Store } from 'lucide-react-native';
 import tw from '@/tw'
@@ -10,6 +10,7 @@ import useColorScheme from '@/hooks/useTheme';
 import { Row } from './FlexViews';
 import { LanguageToggle } from './LanguageToggle';
 import { ThemeToggle } from './ThemeToggle';
+import PressableOpacity from './PressableOpacity';
 
 export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
@@ -77,7 +78,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
             (isDarkColorScheme ? colors.muted.dark : colors.muted.DEFAULT)
 
           return (
-            <TouchableOpacity
+            <PressableOpacity
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -98,7 +99,7 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
                   {label}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </PressableOpacity>
           );
         }
       })

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
-import { Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { getLocales } from 'expo-localization';
 import { useTranslation } from 'react-i18next';
 import useColorScheme from '@/hooks/useTheme';
@@ -8,6 +8,7 @@ import { colors } from '@/colors';
 import { Globe } from 'lucide-react-native';
 import tw from '@/tw';
 import i18next from '@/locales/i18n';
+import PressableOpacity from './PressableOpacity';
 
 export function LanguageToggle() {
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
@@ -36,10 +37,10 @@ export function LanguageToggle() {
   }
 
   return (
-    <TouchableOpacity style={tw`text-sm flex flex-row flex-nowrap items-center p-1 rounded-lg mr-2`}
+    <PressableOpacity style={tw`text-sm flex flex-row flex-nowrap items-center p-1 rounded-lg mr-2`}
       onPress={async () => changeLanguage()} >
       <Globe color={colors.muted.DEFAULT} size={23} strokeWidth={1.25} />
       <Text style={tw`text-muted`}>{i18next.language === "cn" ? "EN" : "中"}</Text>
-    </TouchableOpacity>
+    </PressableOpacity>
   );
 }

@@ -1,5 +1,5 @@
 import tw from "@/tw";
-import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import OrderCard from "@/components/OrderCard";
 import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";

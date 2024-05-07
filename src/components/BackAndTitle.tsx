@@ -1,7 +1,7 @@
-import { View, TouchableOpacity } from "react-native";
+import { View} from "react-native";
 import { router } from 'expo-router';
 import tw from "twrnc"
-import { H4, P } from "./Typography";
+import { H4, P1 } from "./Typography";
 import { ArrowLeft } from "@/components/Icons"
 import { Row } from "./FlexViews";
 

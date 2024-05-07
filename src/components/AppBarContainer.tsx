@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getLocales } from 'expo-localization';
+import React from 'react'
 
 //styling
-import { Text, View, TouchableOpacity, Modal } from 'react-native';
+import { View } from 'react-native';
 
-import {RowBetween } from './FlexViews';
+import { RowBetween } from './FlexViews';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import tw from '@/tw';
 
