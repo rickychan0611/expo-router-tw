@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const URL = process.env.EXPO_PUBLIC_HOST_URL
 
 export const GET = async (api: string, params?: any) => {
-
+  console.log("GGGGGG", api, params)
   const userToken = await AsyncStorage.getItem("userToken")
   try {
     const response = await axios.get(URL + api,
@@ -24,7 +24,7 @@ export const GET = async (api: string, params?: any) => {
 }
 
 export const POST = async (api: string, body?: any) => {
-  const userToken = await AsyncStorage.getItem("buyerToken")
+  const userToken = await AsyncStorage.getItem("userToken")
   if (userToken) {
     try {
       const response = await axios.post(URL + api,
@@ -51,7 +51,7 @@ export const POST_NO_TOKEN: any = async (api: string, body: any) => {
 }
 
 export const FORM_POST = async (api: string, body: any) => {
-  const userToken = await AsyncStorage.getItem("buyerToken")
+  const userToken = await AsyncStorage.getItem("userToken")
   if (userToken) {
     try {
       const response = await axios.post(URL + api,

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { GET, POST, POST_NO_TOKEN } from './apiCalls'
+import { OrderFilter, OrderFilterQueryParams } from '@/interfaces/productTypes'
 
 export const api_products = {
 
@@ -16,7 +17,7 @@ export const api_products = {
       { category_id, pagesize: 100000, page: 1 })
   },
   getOrders: async (
-    status: "new" | "delivering" | "delivered" | "cancelled" | "unsettled" | "settled" | "all",
+    status: OrderFilter,
     page?: number, 
     pagesize?: number,
     start_time?: number, 

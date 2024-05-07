@@ -13,11 +13,7 @@ import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
 import SlideDownMenu from "@/components/SlideDownMenu";
 
-type Props = {
-  setQueryParams: any
-}
-
-const OrdersScreenTopBar = ({ setQueryParams }: Props) => {
+const OrdersScreenTopBar = ( ) => {
   const [t, i18n] = useTranslation("common")
   const topBarHeight = useAppStore((state) => state.topBarHeight)
   const setTopBarHeight = useAppStore((state) => state.setTopBarHeight)

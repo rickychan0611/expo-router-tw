@@ -1,5 +1,10 @@
-import { OrderFilter, StateDays } from "@/interfaces/productTypes";
+import { Order, OrderFilter, OrderFilterQueryParams, StateDays } from "@/interfaces/productTypes";
 import { create } from "zustand";
+
+type SectionListData = {
+  title: string
+  data: Order[]
+}[]
 
 type AppState = {
   count: number;
@@ -18,6 +23,10 @@ type AppState = {
   setTopBarHeight: (height: number) => void
   tabBarHeight: number
   setTabBarHeight: (height: number) => void
+  orderFilterQueryParams: OrderFilterQueryParams
+  setOrderFilterQueryParams: (params: OrderFilterQueryParams) => void
+  orderListData: SectionListData
+  setOrderListData: (data: SectionListData) => void
 };
 
 export const useAppStore = create<AppState>((set) => ({
@@ -29,7 +38,7 @@ export const useAppStore = create<AppState>((set) => ({
   reset: () => set({ count: 0 }),
   statsFilter: "Yesterday",
   setStatsFilter: (filter) => set({ statsFilter: filter }),
-  orderFilter: undefined,
+  orderFilter: "all",
   setOrderFilter: (filter) => set({ orderFilter: filter }),
   openFilterMenu: false,
   setOpenFilterMenu: (open) => set({ openFilterMenu: open }),
@@ -37,4 +46,15 @@ export const useAppStore = create<AppState>((set) => ({
   setTopBarHeight: (height) => set({ topBarHeight: height }),
   tabBarHeight: 0,
   setTabBarHeight: (height) => set({ tabBarHeight: height }),
+
+  orderFilterQueryParams: { //default 
+    status: "all",
+    page: 1,
+    pagesize: 5
+  },
+  setOrderFilterQueryParams: (params) => set({ orderFilterQueryParams: params }),
+
+  orderListData: [],
+  setOrderListData: (data) => set({ orderListData: data }),
+
 }));

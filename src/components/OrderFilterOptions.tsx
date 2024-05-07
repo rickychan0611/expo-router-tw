@@ -17,6 +17,8 @@ import { ListFilter, MoreHorizontal, Search } from "lucide-react-native";
 import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
 import Divider from "@/components/Divider";
+import { useOrders } from "@/api/queryHooks/useProductQueries";
+import { OrderFilterQueryParams } from "@/interfaces/productTypes";
 
 type Props = {
 }
@@ -24,14 +26,27 @@ type Props = {
 const OrderFilterOptions = () => {
   const orderFilter = useAppStore((state) => state.orderFilter)
   const setOrderFilter = useAppStore((state) => state.setOrderFilter)
+  const setOpenFilterMenu = useAppStore((state) => state.setOpenFilterMenu)
   const screenWidth = Dimensions.get('window').width
+
+  const orderFilterQueryParams = useAppStore((state) => state.orderFilterQueryParams)
+  const setOrderFilterQueryParams = useAppStore((state) => state.setOrderFilterQueryParams)
+
+  const handleApplyFilter = () => {
+    const temp: OrderFilterQueryParams = { ...orderFilterQueryParams }
+    temp.status = orderFilter
+    setOrderFilterQueryParams(temp)
+    setOpenFilterMenu(false)
+  }
+
+
   return (
     <View style={tw`bg-card dark:bg-card-dark p-4 pb-6 rounded-b-m w-[${screenWidth}px] max-w-[500px]`}>
       <RowBetween>
         <H5 style={tw`text-neutral-900 dark:text-neutral-dark-900 my-2`}>
           Filter
         </H5>
-        <PressableOpacity onPress={() => { setOrderFilter(undefined) }}>
+        <PressableOpacity onPress={() => { setOrderFilter("all") }}>
           <Interact style={tw`text-neutral-400 dark:text-neutral-dark-500`}>
             Reset
           </Interact>
@@ -41,35 +56,35 @@ const OrderFilterOptions = () => {
       <ScrollView horizontal>
         <Row style={tw`flex-1 mt-2 gap-1 pb-6 border-b border-neutral-200 dark:border-muted-dark`}>
           <Button
-            color={orderFilter === "New" ? colors.primary[300] : colors.neutral[100]}
-            darkColor={orderFilter === "New" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+            color={orderFilter === "new" ? colors.primary[300] : colors.neutral[100]}
+            darkColor={orderFilter === "new" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
             style={tw`rounded-full`}
             onPress={() => {
-              setOrderFilter("New")
+              setOrderFilter("new")
             }}
           >
             New
           </Button>
           <Button
-            color={orderFilter === "Delivering" ? colors.primary[300] : colors.neutral[100]}
-            darkColor={orderFilter === "Delivering" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
-            onPress={() => setOrderFilter("Delivering")}
+            color={orderFilter === "delivering" ? colors.primary[300] : colors.neutral[100]}
+            darkColor={orderFilter === "delivering" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+            onPress={() => setOrderFilter("delivering")}
             style={tw`rounded-full`}
           >
             Delivering
           </Button>
           <Button
-            color={orderFilter === "Delivered" ? colors.primary[300] : colors.neutral[100]}
-            darkColor={orderFilter === "Delivered" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
-            onPress={() => setOrderFilter("Delivered")}
+            color={orderFilter === "delivered" ? colors.primary[300] : colors.neutral[100]}
+            darkColor={orderFilter === "delivered" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+            onPress={() => setOrderFilter("delivered")}
             style={tw`rounded-full`}
           >
             Delivered
           </Button>
           <Button
-            color={orderFilter === "Cancelled" ? colors.primary[300] : colors.neutral[100]}
-            darkColor={orderFilter === "Cancelled" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
-            onPress={() => setOrderFilter("Cancelled")}
+            color={orderFilter === "cancelled" ? colors.primary[300] : colors.neutral[100]}
+            darkColor={orderFilter === "cancelled" ? colors.primary.dark.DEFAULT : colors.neutral[800]}
+            onPress={() => setOrderFilter("cancelled")}
             style={tw`rounded-full`}
           >
             Cancelled
@@ -93,7 +108,10 @@ const OrderFilterOptions = () => {
         <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
           placeholder="Search Order" />
       </Row>
-      <Button style={tw`mt-8`}>Apply</Button>
+      <Button style={tw`mt-8`}
+        onPress={handleApplyFilter}>
+        Apply
+      </Button>
     </View>
   )
 }

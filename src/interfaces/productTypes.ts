@@ -1,10 +1,4 @@
-export interface useGetOrderListTypes {
-  status: "all" | "new" | "delivering" | "delivered" | "cancelled" | "unsettled" | "settled";
-  page: number;
-  pagesize: number;
-  start_time?: number;
-  end_time?: number;
-}
+
 
 export interface Order {
   id: number
@@ -68,6 +62,13 @@ export interface OrderItem {
   order_item_id: number
 }
 
-
 export type StateDays = "Yesterday" | "Last 7 days" | "Last 30 days" | "This month" | "This year" | "All time";
-export type OrderFilter = "New" | "Delivering" | "Cancelled" | "Delivered" | undefined;
+export type OrderFilter = "all" | "new" | "delivering" | "cancelled" | "delivered";
+
+export interface OrderFilterQueryParams {
+  status: OrderFilter;
+  page: number;
+  pagesize: number;
+  start_time?: number;
+  end_time?: number;
+}

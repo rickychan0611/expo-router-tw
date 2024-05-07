@@ -11,6 +11,8 @@ import BackAndTitle from '@/components/BackAndTitle'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api_user } from '@/api/api_user'
 import tw from "@/tw"
+import { useOrders } from '@/api/queryHooks/useProductQueries'
+import { useAppStore } from '@/stores'
 
 type Props = {}
 
@@ -20,6 +22,7 @@ const SignIn = (props: Props) => {
   const [count, setCount] = useState(5);
   const [otp, setOtp] = useState("");
   const [err, setErr] = useState("")
+  const orderFilterQueryParams = useAppStore((state) => state.orderFilterQueryParams)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -36,7 +39,6 @@ const SignIn = (props: Props) => {
   }, [count]);
 
   const queryClient = useQueryClient();
-
   const sendCodeMutation = useMutation({
     mutationFn: () => api_user.sendSignInCode(phone),
   });
@@ -54,7 +56,8 @@ const SignIn = (props: Props) => {
       console.log("onSuccess", res)
       await AsyncStorage.setItem("userToken", res.data.data)
       queryClient.invalidateQueries({ queryKey: ["userInfo"] })
-      router.push('/')
+      queryClient.invalidateQueries({ queryKey: ["order", "list", orderFilterQueryParams] })
+      router.push('/orders')
     }
   });
 
