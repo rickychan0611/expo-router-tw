@@ -13,7 +13,7 @@ const RouterTabs = () => {
   return (
     <Tabs
       key={themeKey}
-      initialRouteName='orders'
+      initialRouteName='/orders'
       backBehavior='history'
       screenOptions={{
         headerShown: false,

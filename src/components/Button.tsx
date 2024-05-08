@@ -26,7 +26,7 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
   // default
   let bgClass = tw`bg-primary dark:bg-primary-dark`
   let textClass = tw`text-primary-foreground dark:text-primary-dark-foreground`
-  const cirlceClass = circle ? tw`rounded-full p-sm` : tw`rounded py-sm px-m`
+  const cirlceClass = circle ? tw`rounded-full p-sm` : tw`rounded py-1 px-m`
 
   //custom color
   if (color) {
@@ -65,8 +65,8 @@ const Button: React.FC<Props> = ({ children, variant, disabled, style, icon, cir
   const Icon: any = icon ? Icons[icon] : <></>
 
   return (
-    <PressableOpacity style={[bgClass, cirlceClass, style]} disabled={disabled} onPress={onPress} full={full}>
-      <Center >
+    <PressableOpacity style={[bgClass, cirlceClass, style]} disabled={disabled} onPress={onPress}>
+      <Center>
         <Center style={tw`gap-2`}>
           {icon && <Icon style={textClass} />}
           {!circle && <Interact style={[textClass, tw`text-center px-2`]}>

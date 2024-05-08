@@ -78,28 +78,29 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
             (isDarkColorScheme ? colors.muted.dark : colors.muted.DEFAULT)
 
           return (
-            <PressableOpacity
-              accessibilityRole="button"
-              accessibilityState={isFocused ? { selected: true } : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              style={tw`flex-1 items-center justify-center`}
-              key={index}
-            >
-              <View style={tw`flex-col mt-2 gap-1 items-center `}
+            <View style={tw`flex-1`} key={index}>
+              <PressableOpacity
+                accessibilityRole="button"
+                accessibilityState={isFocused ? { selected: true } : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
+                style={tw`items-center justify-center`}
               >
-                {label === "Home" ? <LayoutDashboard color={color} size={30} key={tw.memoBuster + index} /> :
-                  label === "Order" ? <ClipboardList color={color} size={30} /> :
-                    label === "Listings" ? <Boxes color={color} size={30} /> :
-                      <Store color={color} size={30} />
-                }
-                <Text style={isFocused ? tw`text-primary dark:text-primary-dark text-sm` : tw`text-muted dark:text-muted-dark text-sm `}>
-                  {label}
-                </Text>
-              </View>
-            </PressableOpacity>
+                <View style={tw`flex-col mt-2 gap-1 items-center `}
+                >
+                  {label === "Home" ? <LayoutDashboard color={color} size={30} key={tw.memoBuster + index} /> :
+                    label === "Order" ? <ClipboardList color={color} size={30} /> :
+                      label === "Listings" ? <Boxes color={color} size={30} /> :
+                        <Store color={color} size={30} />
+                  }
+                  <Text style={isFocused ? tw`text-primary dark:text-primary-dark text-sm` : tw`text-muted dark:text-muted-dark text-sm `}>
+                    {label}
+                  </Text>
+                </View>
+              </PressableOpacity>
+            </View>
           );
         }
       })

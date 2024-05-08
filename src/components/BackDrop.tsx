@@ -18,7 +18,7 @@ import { useOrdersStore } from '@/stores';
 import { BlurView } from 'expo-blur';
 
 type Props = {
-  setOpen: any
+  setOpen?: any
   open: boolean
 }
 

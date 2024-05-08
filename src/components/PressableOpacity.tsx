@@ -2,7 +2,7 @@ import tw from '@/tw';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
-function PressableOpacity({ style, onPress, children, disabled, full }: any) {
+function PressableOpacity({ style, onPress, children, disabled }: any) {
   return (
     <Pressable onPress={onPress} disabled={disabled} style={style}
     >

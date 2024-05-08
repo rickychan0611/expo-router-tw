@@ -1,27 +1,17 @@
+import React from "react";
 import tw from "@/tw";
-import { Text, View, StyleSheet, Pressable, StatusBar, ScrollView, Animated, Dimensions } from "react-native";
-import { useAppColorScheme } from "twrnc";
-import React, { useEffect, useState } from "react";
+import { View, ScrollView, Dimensions } from "react-native";
 import { useOrdersStore } from "@/stores";
-import useColorScheme from "@/hooks/useTheme";
-import { useTranslation } from "react-i18next";
-import { useFocusEffect } from "expo-router";
-import AppBarContainer from "@/components/AppBarContainer";
-import { H3, H4, H5, Interact, P1, Small, Subhead } from "@/components/Typography";
+import { H5, Interact } from "@/components/Typography";
 import Button from "@/components/Button";
-import Container from "@/components/Container";
 import TextInput from "@/components/TextInput";
-import Card from "@/components/Card";
-import { Center, ColCenter, Row, RowBetween } from "@/components/FlexViews";
-import { ListFilter, MoreHorizontal, Search } from "lucide-react-native";
+import { Row, RowBetween } from "@/components/FlexViews";
 import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
-import Divider from "@/components/Divider";
-import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";
+import { useInfiniteQueryOrders } from "@/api/queryHooks/useProductQueries";
 import { OrderFilterQueryParams } from "@/interfaces/productTypes";
-
-type Props = {
-}
+import DatePicker from "./DatePicker";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 
 const OrderFilterOptions = () => {
   const orderFilter = useOrdersStore((state) => state.orderFilter)
@@ -41,9 +31,10 @@ const OrderFilterOptions = () => {
     setOpenFilterMenu(false)
   }
 
-
   return (
     <View style={tw`bg-card dark:bg-card-dark p-4 pb-6 rounded-b-m w-[${screenWidth}px] max-w-[500px]`}>
+
+      {/* <DatePicker /> */}
       <RowBetween>
         <H5 style={tw`text-neutral-900 dark:text-neutral-dark-900 my-2`}>
           Filter
@@ -100,20 +91,26 @@ const OrderFilterOptions = () => {
         <Interact style={tw`text-primary-800 dark:text-primary-dark-800 w-15`}>
           From
         </Interact>
-        <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
-          placeholder="Search Order" />
+        <DatePicker
+          placeholder="Start Date"
+        />
       </Row>
       <Row style={tw`mt-4 gap-4`}>
         <Interact style={tw`text-primary-800 dark:text-primary-dark-800 w-15`}>
           To
         </Interact>
-        <TextInput style={tw`flex-1 bg-background rounded text-black placeholder:text-muted`}
-          placeholder="Search Order" />
+        <DatePicker
+          placeholder="End Date"
+        />
       </Row>
-      <Button style={tw`mt-8`}
-        onPress={handleApplyFilter}>
-        Apply
-      </Button>
+
+      <View style={tw`mt-8`}>
+        <Button
+          onPress={handleApplyFilter}>
+          Apply
+        </Button>
+      </View>
+
     </View>
   )
 }
