@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Pressable, Modal } from 'react-native';
 import tw from '@/tw';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import Card from './Card';
-import BackDrop from './BackDrop';
 import useTheme from '@/hooks/useTheme';
+import { Row, RowBetween } from './FlexViews';
+import { H5, Interact } from './Typography';
+import PressableOpacity from './PressableOpacity';
 
 interface MonthData {
   year: number;
@@ -36,9 +38,14 @@ const getMonthData = (year: number, month: number): MonthData => {
 
   return { year, month, data };
 };
+type Props = {
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
+  showDatePicker: boolean;
+  setShowDatePicker: (showDatePicker: boolean) => void;
+}
+const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
 
-const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState<string>('');
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
 
@@ -68,25 +75,35 @@ const Calendar = () => {
 
   const RenderCalendar = () => {
     const monthData = getMonthData(year, month);
-    const {isDarkColorScheme} = useTheme();
+    const { isDarkColorScheme } = useTheme();
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
       <>
-        <View style={tw`flex-row w-full justify-between items-center mb-3`}>
-          <TouchableOpacity onPress={handlePrevMonthPress}
-            style={tw`w-12 h-14 justify-center items-center bg-gray-100 dark:bg-neutral-800 border border-gray-300 dark:border-0 rounded`}>
-            <ChevronLeft size={24} color={isDarkColorScheme ? 'white' : 'black'} />
-          </TouchableOpacity>
-          <Text style={tw`text-lg text-black dark:text-white`}>{new Date(year, month).toLocaleString('default', { month: 'long' })} {year}</Text>
-          <TouchableOpacity onPress={handleNextMonthPress}
-            style={tw`w-12 h-14 justify-center items-center bg-gray-100 dark:bg-neutral-800 border border-gray-300 dark:border-0 rounded`}>
-            <ChevronRight size={24} color={isDarkColorScheme ? 'white' : 'black'} />
-          </TouchableOpacity>
+        <View style={tw`w-full m-2 pr-4`}>
+          <RowBetween>
+            <H5>Date</H5>
+            <PressableOpacity onPress={() => setShowDatePicker(false)}>
+              <Interact style={tw`text-secondary-500 `}>Done</Interact>
+            </PressableOpacity>
+          </RowBetween>
+          <RowBetween style={tw`mt-4 mb-2`}>
+            <H5>
+              {new Date(year, month).toLocaleString('default', { month: 'long' })} {year}
+            </H5>
+            <Row style={tw`gap-7`}>
+              <TouchableOpacity onPress={handlePrevMonthPress}>
+                <ChevronLeft size={26} color={isDarkColorScheme ? 'white' : 'black'} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleNextMonthPress}>
+                <ChevronRight size={26} color={isDarkColorScheme ? 'white' : 'black'} />
+              </TouchableOpacity>
+            </Row>
+          </RowBetween>
         </View>
         <View style={tw`w-full flex-row`}>
           {weekDays.map((day, idx) => (
-            <View key={idx} style={[tw`flex-1 w-full h-14 justify-center items-center border border-gray-300 dark:border-neutral-700`, tw`bg-gray-100 dark:bg-neutral-800`]}>
+            <View key={idx} style={[tw`flex-1 w-full h-10 justify-center items-center`]}>
               <Text style={tw`text-sm text-black dark:text-white`}>{day}</Text>
             </View>
           ))}
@@ -96,16 +113,24 @@ const Calendar = () => {
             {week.map((day, idx) => (
               <TouchableOpacity
                 key={idx}
-                style={[
-                  tw`flex-1 w-full h-14 justify-center items-center border border-gray-300 dark:border-neutral-700`,
-                  day === Number(selectedDate) ? tw`bg-red-200 dark:bg-primary` : tw`bg-white dark:bg-black`,
-                  !day ? tw`bg-gray-100 dark:bg-neutral-900` : null
-                ]}
+                style={[tw`rounded flex-1 w-auto h-12 justify-center items-center`]}
                 onPress={() => handleDayPress(day)}
               >
-                <Text style={tw`text-lg text-black dark:text-white`}>{day || ''}</Text>
+                {/* selected day circle */}
+                {selectedDate && day === Number(selectedDate) &&
+                  <View style={[tw`w-11 h-11 absolute`,
+                  tw`bg-red-200 dark:bg-primary rounded-full`,
+                  ]} />}
+
+                {/* day number */}
+                <Text style={[tw`text-lg text-black dark:text-white`]}>
+                  {day || ''}
+                </Text>
+
+                {/* today dot */}
                 {day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear() &&
-                  <View style={tw`w-2 h-2 bg-red-500 rounded-full absolute bottom-1`}></View>}
+                  <View style={tw`w-1 h-1 bg-red-500 rounded-full absolute bottom-2`} />}
+
               </TouchableOpacity>
             ))}
           </View>
@@ -115,11 +140,13 @@ const Calendar = () => {
   };
 
   return (
-    <View style={tw`flex-1 w-full justify-center items-center p-4 bg-[rgba(0,0,0,0.4)]`}>
-      <Card style={tw`w-full max-w-xl`}>
-        <RenderCalendar />
-      </Card>
-    </View>
+    <Modal visible={showDatePicker} transparent >
+      <View style={tw`flex-1 w-full justify-center items-center p-4 bg-[rgba(0,0,0,0.4)]`}>
+        <Card style={tw`w-full max-w-xl`}>
+          <RenderCalendar />
+        </Card>
+      </View>
+    </Modal>
   );
 };
 

@@ -11,7 +11,7 @@ import { Row, RowBetween } from "@/components/FlexViews";
 import { ListFilter, Search } from "lucide-react-native";
 import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
-import SlideDownMenu from "@/components/SlideDownMenu";
+import SlideDownMenu from "@/components/ui/orders/SlideDownMenu";
 
 const OrdersScreenTopBar = ( ) => {
   const [t, i18n] = useTranslation("common")
@@ -40,7 +40,7 @@ const OrdersScreenTopBar = ( ) => {
               All orders
             </H4>
             <RowBetween style={tw`mt-2 gap-2`}>
-              <Row style={tw`bg-input sm:bg-background rounded flex-1`}>
+              <Row style={tw`bg-input dark:bg-input-dark rounded flex-1`}>
                 <View style={tw`pl-2`}>
                   <Search color={colors.muted.DEFAULT} />
                 </View>

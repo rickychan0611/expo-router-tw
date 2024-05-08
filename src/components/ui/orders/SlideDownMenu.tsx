@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import tw from '@/tw';
 import { useOrdersStore } from '@/stores';
-import BackDrop from './BackDrop';
+import BackDrop from '../../BackDrop';
 import { Dimensions, View } from 'react-native';
 import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
 
@@ -88,12 +88,10 @@ const SlideDownMenu = ({ topBarHeight }: Props) => {
   return (
     <>
       <BackDrop open={openFilterMenu} setOpen={setOpenFilterMenu} />
-      <GestureDetector gesture={fling}>
-        <Animated.View style={[tw`absolute z-49 left-[${translateX}px] top-[${topBarHeight || 0}px]`, animatedStyle]}
-          onLayout={onLayout}>
-          <OrderFilterOptions />
-        </Animated.View>
-      </GestureDetector>
+      <Animated.View style={[tw`absolute z-49 left-[${translateX}px] top-[${topBarHeight || 0}px]`, animatedStyle]}
+        onLayout={onLayout}>
+        <OrderFilterOptions menuSize={menuSize} />
+      </Animated.View>
     </>
   )
 }

@@ -11,6 +11,7 @@ import Animated, {
   useSharedValue,
   withSpring,
   useAnimatedStyle,
+  runOnJS,
 } from 'react-native-reanimated';
 import tw from '@/tw';
 import { Dimensions, Pressable } from 'react-native';
@@ -28,23 +29,25 @@ const BackDrop = ({ setOpen, open }: Props) => {
   const screenHeight = Dimensions.get('window').height;
   const [disabled, setDisabled] = useState(false);
   const opacity = useSharedValue(0);
-  const translateY = useSharedValue(-screenHeight);
+  const translateY = useSharedValue(-screenHeight || -1000);
+
   const timeout = () => {
     translateY.value = -screenHeight
     setDisabled(false)
   }
 
   useEffect(() => {
-
     let timeoutId: any
-    if (!openFilterMenu) {
+    if (openFilterMenu === false) {
+      console.log("openFilterMenu false")
       setDisabled(true)
       opacity.value = 0
-      timeoutId = setTimeout(() => timeout(), 100)
+      timeoutId = setTimeout(() => runOnJS(timeout)(), 300)
     }
-    else {
+    else if (openFilterMenu === true) {
+      console.log("openFilterMenu true")
       translateY.value = 0
-      opacity.value = .6
+      opacity.value = .8
     }
     return () => {
       clearTimeout(timeoutId);
@@ -53,23 +56,26 @@ const BackDrop = ({ setOpen, open }: Props) => {
 
   const backdropStyle = useAnimatedStyle(() => ({
     opacity: withSpring(opacity.value, {
-      duration: 100,
+      duration: 300,
       dampingRatio: 1,
       stiffness: 1,
     }),
     transform: [{
-      translateY: translateY.value
+      translateY: withSpring(translateY.value, {
+        duration: 1,
+        dampingRatio: 1,
+        stiffness: 1,
+      }),
     }],
   }));
 
   return (
-    <Animated.View style={[tw`bg-neutral-500 flex-1 absolute w-full h-screen z-48`, backdropStyle]}>
-      <BlurView blurReductionFactor={50} experimentalBlurMethod={"dimezisBlurView"} tint="dark" intensity={50} style={tw`w-full h-full`} >
-        <Pressable onPress={() => setOpen(!open)} style={tw`w-full h-full`} disabled={disabled}>
-        </Pressable>
-      </BlurView>
+    <Animated.View style={[tw`bg-neutral-900 dark:bg-black flex-1 absolute w-full h-screen z-48`, backdropStyle]}>
+      <Pressable onPress={() => setOpen(false)} style={tw`w-full h-full`} disabled={disabled}>
+      </Pressable>
     </Animated.View >
   )
 }
 
 export default BackDrop
+

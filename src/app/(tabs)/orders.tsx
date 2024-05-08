@@ -1,12 +1,12 @@
 import tw from "@/tw";
 import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import OrderCard from "@/components/OrderCard";
+import OrderCard from "@/components/ui/orders/OrderCard";
 import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";
 import { Order } from "@/interfaces/productTypes";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import moment from "moment";
-import OrdersScreenTopBar from "@/components/OrdersScreenTopBar";
+import OrdersScreenTopBar from "@/components/ui/orders/OrdersScreenTopBar";
 import { useOrdersStore } from "@/stores/useOrdersStore";
 import { useAppStore } from "@/stores";
 import { colors } from "@/colors";

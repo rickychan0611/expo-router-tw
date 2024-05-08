@@ -6,10 +6,10 @@ const TextInput = ({ style, ...props }: any) => {
   const outlineWidth = Platform.OS === 'web' ? { outlineWidth: 0 } : ""
   return (
     <RNTextInput
-      style={[
-        tw`p-3 bg-input sm:bg-background rounded text-black placeholder:text-muted`,
-        , style, outlineWidth]}
       {...props}
+      style={[
+        tw`p-3 bg-input dark:bg-input-dark dark:text-white sm:bg-background rounded text-black placeholder:text-muted`,
+        , style, outlineWidth]}
       maxFontSizeMultiplier={1.5}
       placeholderTextColor={'#9CA3AF'}
     />
