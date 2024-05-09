@@ -1,5 +1,6 @@
 import { useAppStore } from '@/stores';
 import tw from '@/tw';
+import { useEffect } from 'react';
 import { useAppColorScheme } from 'twrnc';
 
 export default function useTheme() {
@@ -10,6 +11,10 @@ export default function useTheme() {
     toggleColorScheme();
     triggerThemeKey();
   }
+
+  // useEffect(() => {
+  //   console.log("colorScheme", colorScheme)
+  // }, [colorScheme ])
 
   return {
     colorScheme,

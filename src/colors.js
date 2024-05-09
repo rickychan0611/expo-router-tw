@@ -72,7 +72,7 @@ export const colors = {
     400: '#4EA4E2',
     300: '#8CC4ED',
     200: '#C2DEF5',
-    100: '#EOEFF9',
+    100: '#e1f0fa',
     "dark": {
       DEFAULT: '#15578F',
       foreground: adjustColorBrightness('#15578F', 0.5),
