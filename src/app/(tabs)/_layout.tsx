@@ -12,7 +12,7 @@ const RouterTabs = () => {
   const router = useRouter();
   return (
     <Tabs
-      key={themeKey}
+      // key={themeKey}
       initialRouteName='/orders'
       backBehavior='history'
       screenOptions={{
