@@ -41,7 +41,7 @@ const OrderDeatailTopBar = () => {
 
             <ColCenter style={tw`absolute top-0 z-50 h-full`}>
               <PressableOpacity
-                onPress={() => router.push('/orders')}>
+                onPress={() => router.canGoBack() ? router.back() : router.push('/orders')}>
                 <ArrowLeft size={26} color={isDarkColorScheme ? colors.white : colors.white} />
               </PressableOpacity>
             </ColCenter>

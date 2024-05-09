@@ -2,7 +2,7 @@ import tw from "@/tw";
 import { Text, View, StatusBar, FlatList, SectionList, useWindowDimensions, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import OrderCard from "@/components/ui/orders/OrderCard";
-import { useInfiniteQueryOrders, useOrders } from "@/api/queryHooks/useProductQueries";
+import { useInfiniteQueryOrders } from "@/api/queryHooks/useProductQueries";
 import { Order } from "@/interfaces/productTypes";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import moment from "moment";
@@ -108,7 +108,8 @@ const Orders = () => {
   const EmptyList = () => {
     return (
       <>
-        {!orders.isLoading && <H5 style={tw`text-center text-neutral-600 dark:text-neutral-dark-600 mt-10`}>No Orders Found</H5>}
+        {!orders.isLoading && !orders?.pages?.[0]?.data?.[0] &&
+          <H5 style={tw`text-center text-neutral-600 dark:text-neutral-dark-600 mt-10`}>No Orders Found</H5>}
       </>
     )
   }
@@ -135,7 +136,7 @@ const Orders = () => {
           renderSectionHeader={renderSectionHeader}
           onEndReached={() => orders.fetchNextPage()}
           onRefresh={() => orders.refetch()}
-          refreshing={orders.isFetching}
+          refreshing={orders.isLoading}
           ListEmptyComponent={<EmptyList />}
           ListFooterComponent={renderFooter}
         />
