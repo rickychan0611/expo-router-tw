@@ -52,11 +52,15 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      if (!orders?.pages?.[0]?.data?.[0]) return
-      const ordersArray: any = orders.pages
-      const flatmapped = ordersArray.flatMap((page: any) => page.data)
-      const newSections = await convertSectionData(flatmapped);
-      setOrderSectionData(newSections)
+      if (!orders?.pages?.[0]?.data?.[0]) {
+        setOrderSectionData([])
+      }
+      else {
+        const ordersArray: any = orders.pages
+        const flatmapped = ordersArray.flatMap((page: any) => page.data)
+        const newSections = await convertSectionData(flatmapped);
+        setOrderSectionData(newSections)
+      }
     })()
   }, [orders.pages])
 

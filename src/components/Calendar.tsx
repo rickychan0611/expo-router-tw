@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Pressable, Modal } from 'react-native';
+
+
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import tw from '@/tw';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import Card from './Card';
@@ -51,20 +53,30 @@ type Props = {
   showDatePicker: boolean;
   setShowDatePicker: (showDatePicker: boolean) => void;
 }
+/**
+ * Renders a calendar component that allows the user to select a date with a calendar modal.
+ *
+ * @param {Props} props - The component props.
+ * @param {SelectedDate} props.selectedDate - The currently selected date.
+ * @param {function} props.setSelectedDate - The function to update the selected date.
+ * @param {boolean} props.showDatePicker - Whether the date picker is visible.
+ * @param {function} props.setShowDatePicker - The function to update the visibility of the date picker.
+ * @return {JSX.Element} The rendered calendar component.
+ */
 const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
-  const today = new Date()
 
   const [onYear, setOnYear] = useState<number>(new Date().getFullYear());
   const [onMonth, setOnMonth] = useState<number>(new Date().getMonth());
-  const [onDay, setOnDay] = useState<number>(new Date().getDate());
 
   useEffect(() => {
     if (selectedDate.day && selectedDate.month && selectedDate.year) {
       setOnYear(+selectedDate.year)
       setOnMonth(+selectedDate.month - 1)
-      setOnDay(+selectedDate.day)
     }
-    console.log("dfdfd")
+    else {
+      setOnYear(new Date().getFullYear())
+      setOnMonth(new Date().getMonth())
+    }
   }, [selectedDate])
 
   const handleDayPress = (day: number) => {
@@ -75,24 +87,22 @@ const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePi
 
   const handleNextMonthPress = () => {
     const nextMonth = (onMonth + 1) % 12;
-    const nextYear = nextMonth === 0 ? +onYear + 1 : +onYear;
+    const nextYear = nextMonth === 0 ? onYear + 1 : onYear;
 
-    setOnDay(0);
     setOnMonth(nextMonth);
     setOnYear(nextYear);
   };
 
   const handlePrevMonthPress = () => {
     const prevMonth = (onMonth + 11) % 12;
-    const prevYear = prevMonth === 0 ? +onYear - 1 : +onYear;
+    const prevYear = prevMonth === 11 ? onYear - 1 : onYear;
 
-    setOnDay(0);
     setOnMonth(prevMonth);
     setOnYear(prevYear);
   };
 
   const RenderCalendar = () => {
-    const monthData = getMonthData(+onYear, +onMonth);
+    const monthData = getMonthData(onYear, onMonth);
     const { isDarkColorScheme } = useTheme();
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

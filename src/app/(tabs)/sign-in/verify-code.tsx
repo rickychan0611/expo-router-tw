@@ -44,7 +44,6 @@ const SignIn = (props: Props) => {
 
   const logInMutation = useMutation({
     mutationFn: (code: string) => {
-      console.log(code)
       return api_user.login(phone, code)
     },
     onError: (err) => {

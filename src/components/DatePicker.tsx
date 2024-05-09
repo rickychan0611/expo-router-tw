@@ -33,10 +33,6 @@ const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDate
     setShowDatePicker(true);
   };
 
-  useEffect(() => {
-    console.log(selectedDate)
-  }, [selectedDate])
-
   return (
     <>
       <Calendar
@@ -49,7 +45,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDate
         <Row style={tw`gap-1 p-2`}>
           <MaskedTextInput
             mask='9999'
-            style={tw`dark:text-white`}
+            style={tw`dark:text-white web:w-10`}
             placeholder={"YYYY"}
             inputMode='numeric'
             value={selectedDate.year}
@@ -61,7 +57,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDate
           <Text style={tw`dark:text-white`}>/</Text>
           <MaskedTextInput
             mask='99'
-            style={tw`dark:text-white text-center`}
+            style={tw`dark:text-white text-center web:w-8`}
             placeholder={"MM"}
             inputMode='numeric'
             value={selectedDate.month}
@@ -73,7 +69,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDate
           <Text style={tw`dark:text-white`}>/</Text>
           <MaskedTextInput
             mask='99'
-            style={tw`dark:text-white text-center pr-2`}
+            style={tw`dark:text-white text-center pr-2 web:w-8`}
             placeholder={"DD"}
             inputMode='numeric'
             value={selectedDate.day}

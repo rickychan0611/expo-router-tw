@@ -39,13 +39,11 @@ const BackDrop = ({ setOpen, open }: Props) => {
   useEffect(() => {
     let timeoutId: any
     if (openFilterMenu === false) {
-      console.log("openFilterMenu false")
       setDisabled(true)
       opacity.value = 0
       timeoutId = setTimeout(() => runOnJS(timeout)(), 300)
     }
     else if (openFilterMenu === true) {
-      console.log("openFilterMenu true")
       translateY.value = 0
       opacity.value = .8
     }

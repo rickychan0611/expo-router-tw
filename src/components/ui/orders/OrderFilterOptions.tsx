@@ -13,6 +13,7 @@ import { OrderFilterQueryParams } from "@/interfaces/productTypes";
 import DatePicker from "../../DatePicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import moment from "moment";
 
 const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
   const orders = useInfiniteQueryOrders()
@@ -26,14 +27,19 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
   const tabBarHeight = useAppStore((state) => state.tabBarHeight)
   const topBarHeight = useOrdersStore((state) => state.topBarHeight)
 
-  const [selectedStartDate, setSelectedStartDate] = React.useState({year: "", month: "", day: ""})
-  const [selectedEndDate, setSelectedEndDate] = React.useState({year: "", month: "", day: ""})
+  const [selectedStartDate, setSelectedStartDate] = React.useState({ year: "", month: "", day: "" })
+  const [selectedEndDate, setSelectedEndDate] = React.useState({ year: "", month: "", day: "" })
   const [showStartDatePicker, setShowStartDatePicker] = React.useState(false)
   const [showEndDatePicker, setShowEndDatePicker] = React.useState(false)
 
-  const handleApplyFilter = ({ menuSize }: any) => {
+  const handleApplyFilter = () => {
     const temp: OrderFilterQueryParams = { ...orderFilterQueryParams }
     temp.status = orderFilter
+    temp.start_time = selectedEndDate.day ? moment(`${selectedStartDate.year}-${selectedStartDate.month}-${selectedStartDate.day} 00:00:00`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
+    temp.end_time = selectedEndDate.day ? moment(`${selectedEndDate.year}-${selectedEndDate.month}-${selectedEndDate.day} 23:59:59`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
+    console.log("selectedStartDate.year", selectedStartDate.year, selectedStartDate.month, selectedStartDate.day)
+    console.log("selectedEndDate.year", selectedEndDate.year, selectedEndDate.month, selectedEndDate.day)
+    console.log("temp", temp)
     setOrderFilterQueryParams(temp)
     orders.refetch()
     setOpenFilterMenu(false)
@@ -63,10 +69,6 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("keyboard", keyboardHeight)
-  }, [keyboardHeight]);
-
   return (
 
     <KeyboardAwareScrollView
@@ -78,7 +80,9 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
           <H5 style={tw`text-neutral-900 dark:text-neutral-dark-900 my-2`}>
             Filter
           </H5>
-          <PressableOpacity onPress={() => { setOrderFilter("all") }}>
+          <PressableOpacity onPress={() => {
+            setOrderFilter("all")
+          }}>
             <Interact style={tw`text-neutral-400 dark:text-neutral-dark-500`}>
               Reset
             </Interact>
@@ -124,9 +128,18 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
           </Row>
         </ScrollView >
 
-        <H5 style={tw`pt-5`}>
-          Date
-        </H5>
+        <RowBetween style={tw`pt-5`}>
+
+          <H5> Date </H5>
+          <PressableOpacity onPress={() => {
+            setSelectedEndDate({ year: "", month: "", day: "" })
+            setSelectedStartDate({ year: "", month: "", day: "" })
+          }}>
+            <Interact style={tw`text-neutral-400 dark:text-neutral-dark-500`}>
+              Reset
+            </Interact>
+          </PressableOpacity>
+        </RowBetween>
 
         <Row style={tw`mt-4 gap-4`}>
           <Interact style={tw`text-primary-800 dark:text-primary-dark-800 w-15`}>
@@ -154,7 +167,7 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
         <View style={tw`mt-8`}>
           <Button
             variant="secondary"
-          // onPress={handleApplyFilter}
+            onPress={handleApplyFilter}
           >
             Apply
           </Button>

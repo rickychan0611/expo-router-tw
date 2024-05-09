@@ -44,7 +44,7 @@ const OrdersScreenTopBar = ( ) => {
                 <View style={tw`pl-2`}>
                   <Search color={colors.muted.DEFAULT} />
                 </View>
-                <TextInput style={tw`flex-1`}
+                <TextInput style={tw`flex-1 bg-input dark:bg-input-dark`}
                   placeholder="Search Order"
                 />
               </Row>
