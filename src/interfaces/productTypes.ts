@@ -69,6 +69,6 @@ export interface OrderFilterQueryParams {
   status: OrderFilter;
   page: number;
   pagesize: number;
-  start_time?: string;
-  end_time?: string;
+  start_timestamp?: string;
+  end_timestamp?: string;
 }

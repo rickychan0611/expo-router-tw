@@ -35,13 +35,12 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
   const handleApplyFilter = () => {
     const temp: OrderFilterQueryParams = { ...orderFilterQueryParams }
     temp.status = orderFilter
-    temp.start_time = selectedEndDate.day ? moment(`${selectedStartDate.year}-${selectedStartDate.month}-${selectedStartDate.day} 00:00:00`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
-    temp.end_time = selectedEndDate.day ? moment(`${selectedEndDate.year}-${selectedEndDate.month}-${selectedEndDate.day} 23:59:59`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
+    temp.start_timestamp = selectedEndDate.day ? moment(`${selectedStartDate.year}-${selectedStartDate.month}-${selectedStartDate.day} 00:00:00`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
+    temp.end_timestamp = selectedEndDate.day ? moment(`${selectedEndDate.year}-${selectedEndDate.month}-${selectedEndDate.day} 23:59:59`, 'YYYY-M-D HH:mm:ss', 'America/Los_Angeles').unix().toString() : ""
     console.log("selectedStartDate.year", selectedStartDate.year, selectedStartDate.month, selectedStartDate.day)
     console.log("selectedEndDate.year", selectedEndDate.year, selectedEndDate.month, selectedEndDate.day)
     console.log("temp", temp)
     setOrderFilterQueryParams(temp)
-    orders.refetch()
     setOpenFilterMenu(false)
   }
 

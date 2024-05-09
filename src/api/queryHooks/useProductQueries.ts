@@ -8,9 +8,9 @@ import { api_products } from "../api_products"
 export const useOrders = () => {
   const isLoggedIn = useIsLoggedIn()
   //query filter is controlled by orderFilterQueryParams
-  const { status, page, pagesize, start_time, end_time } = useOrdersStore((state) => state.orderFilterQueryParams)
+  const { status, page, pagesize, start_timestamp, end_timestamp } = useOrdersStore((state) => state.orderFilterQueryParams)
   const res = useQuery({
-    ...productKeys.order.list(status, page, pagesize, start_time, end_time),
+    ...productKeys.order.list(status, page, pagesize, start_timestamp, end_timestamp),
     // enabled: isLoggedIn
   })
   return { ...res, data: res.data as Order[] }
@@ -18,13 +18,13 @@ export const useOrders = () => {
 
 export const useInfiniteQueryOrders = () => {
 
-  const { status, page, pagesize, start_time, end_time } = useOrdersStore((state) => state.orderFilterQueryParams)
+  const { status, page, pagesize, start_timestamp, end_timestamp} = useOrdersStore((state) => state.orderFilterQueryParams)
   const fetchOrder = async ({ pageParam = 1 }) => {
-    return api_products.getOrders(status, pageParam, pagesize, start_time, end_time)
+    return api_products.getOrders(status, pageParam, pagesize, start_timestamp, end_timestamp)
   }
 
   const res = useInfiniteQuery({
-    queryKey: ['getOrders', { status, start_time, end_time }],
+    queryKey: ['getOrders', { status, start_timestamp, end_timestamp }],
     queryFn: fetchOrder,
     initialPageParam: 1,
     getNextPageParam: (lastPage: any) => {

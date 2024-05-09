@@ -20,10 +20,10 @@ export const api_products = {
     status: OrderFilter,
     page?: number, 
     pagesize?: number,
-    start_time?: number, 
-    end_time?: number) => {
+    start_timestamp?: string, 
+    end_timestamp?: string) => {
     return await GET("/api/b2b/supplier/supplyorders",
-      { status, pagesize, page, start_time, end_time })
+      { status, pagesize, page, start_timestamp, end_timestamp })
   },
   getOrder: async (order_id: string) => {
     return await GET("/api/b2b/supplier/supplyorder",
