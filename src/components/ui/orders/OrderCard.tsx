@@ -54,9 +54,9 @@ const OrderCard = ({ item }: Props) => {
               </View>
             )
           })}
-          <View style={tw`flex-1 justify-center items-center bg-neutral-200 h-[52px] max-w-[52px] rounded `}>
+          {order_items.length >= 6 && <View style={tw`flex-1 justify-center items-center bg-neutral-50 dark:bg-neutral-800 h-[52px] max-w-[52px] rounded `}>
             <MoreHorizontal color={colors.neutral[900]} />
-          </View>
+          </View>}
         </Row>
       </Card>
     </View>

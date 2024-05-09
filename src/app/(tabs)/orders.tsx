@@ -10,6 +10,7 @@ import OrdersScreenTopBar from "@/components/ui/orders/OrdersScreenTopBar";
 import { useOrdersStore } from "@/stores/useOrdersStore";
 import { useAppStore } from "@/stores";
 import { colors } from "@/colors";
+import { H2, H5 } from "@/components/Typography";
 
 type SectionListData = {
   title: string
@@ -104,6 +105,14 @@ const Orders = () => {
     )
   }
 
+  const EmptyList = () => {
+    return (
+      <>
+        {!orders.isLoading && <H5 style={tw`text-center text-neutral-600 dark:text-neutral-dark-600 mt-10`}>No Orders Found</H5>}
+      </>
+    )
+  }
+
   useEffect(() => {
     setListHeight(height - (topBarHeight + tabBarHeight) + (StatusBar.currentHeight || 0))
   }, [topBarHeight, tabBarHeight, height])
@@ -125,9 +134,10 @@ const Orders = () => {
           renderItem={renderSection}
           renderSectionHeader={renderSectionHeader}
           onEndReached={() => orders.fetchNextPage()}
-          ListFooterComponent={renderFooter}
           onRefresh={() => orders.refetch()}
           refreshing={orders.isFetching}
+          ListEmptyComponent={<EmptyList />}
+          ListFooterComponent={renderFooter}
         />
 
       </View>

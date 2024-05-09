@@ -12,6 +12,7 @@ import { ListFilter, Search } from "lucide-react-native";
 import PressableOpacity from "@/components/PressableOpacity";
 import { colors } from "@/colors";
 import SlideDownMenu from "@/components/ui/orders/SlideDownMenu";
+import { OrderFilter } from "@/interfaces/productTypes";
 
 const OrdersScreenTopBar = ( ) => {
   const [t, i18n] = useTranslation("common")
@@ -20,6 +21,7 @@ const OrdersScreenTopBar = ( ) => {
 
   const openFilterMenu = useOrdersStore((state) => state.openFilterMenu)
   const setOpenFilterMenu = useOrdersStore((state) => state.setOpenFilterMenu)
+  const orderFilterQueryParams = useOrdersStore((state) => state.orderFilterQueryParams)
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content')
@@ -30,6 +32,21 @@ const OrdersScreenTopBar = ( ) => {
     const { height } = event.nativeEvent.layout;
     setTopBarHeight(height);
   };
+ 
+  const status = (status: OrderFilter) => {
+    switch (status) {
+      case "all":
+        return t("All Orders")
+      case "new":
+        return t("New")
+      case "delivering":
+        return t("Delivering")
+      case "cancelled":
+        return t("Cancelled")
+      case "delivered":
+        return t("Delivered")
+    }  
+  }
 
   return (
     <>
@@ -37,7 +54,7 @@ const OrdersScreenTopBar = ( ) => {
         <AppBarContainer>
           <View style={tw`flex-1 max-w-6xl mx-auto`}>
             <H4 style={tw`text-white text-center`}>
-              All orders
+             {status(orderFilterQueryParams.status)} 
             </H4>
             <RowBetween style={tw`mt-2 gap-2`}>
               <Row style={tw`bg-input dark:bg-input-dark rounded flex-1`}>
