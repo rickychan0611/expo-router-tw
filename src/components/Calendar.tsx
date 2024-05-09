@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Pressable, Modal } from 'react-native';
 import tw from '@/tw';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
@@ -38,43 +38,61 @@ const getMonthData = (year: number, month: number): MonthData => {
 
   return { year, month, data };
 };
+
+type SelectedDate = {
+  year: string;
+  month: string;
+  day: string;
+};
+
 type Props = {
-  selectedDate: string;
-  setSelectedDate: (date: string) => void;
+  selectedDate: SelectedDate
+  setSelectedDate: (date: SelectedDate) => void;
   showDatePicker: boolean;
   setShowDatePicker: (showDatePicker: boolean) => void;
 }
 const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
+  const today = new Date()
 
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth());
+  const [onYear, setOnYear] = useState<number>(new Date().getFullYear());
+  const [onMonth, setOnMonth] = useState<number>(new Date().getMonth());
+  const [onDay, setOnDay] = useState<number>(new Date().getDate());
+
+  useEffect(() => {
+    if (selectedDate.day && selectedDate.month && selectedDate.year) {
+      setOnYear(+selectedDate.year)
+      setOnMonth(+selectedDate.month - 1)
+      setOnDay(+selectedDate.day)
+    }
+    console.log("dfdfd")
+  }, [selectedDate])
 
   const handleDayPress = (day: number) => {
-    setSelectedDate(day.toString());
-  };
+    setSelectedDate({
+      ...selectedDate, day: day + "", month: (onMonth + 1) + "", year: (onYear) + ""
+    })
+  }
 
   const handleNextMonthPress = () => {
-    const nextMonth = month + 1;
-    const nextYear = nextMonth === 12 ? year + 1 : year;
-    const nextMonthData = getMonthData(nextYear, nextMonth % 12);
+    const nextMonth = (onMonth + 1) % 12;
+    const nextYear = nextMonth === 0 ? +onYear + 1 : +onYear;
 
-    setSelectedDate('');
-    setMonth(nextMonth);
-    setYear(nextYear);
+    setOnDay(0);
+    setOnMonth(nextMonth);
+    setOnYear(nextYear);
   };
 
   const handlePrevMonthPress = () => {
-    const prevMonth = month - 1;
-    const prevYear = prevMonth < 0 ? year - 1 : year;
-    const prevMonthData = getMonthData(prevYear, prevMonth >= 0 ? prevMonth : 11);
+    const prevMonth = (onMonth + 11) % 12;
+    const prevYear = prevMonth === 0 ? +onYear - 1 : +onYear;
 
-    setSelectedDate('');
-    setMonth(prevMonth >= 0 ? prevMonth : 11);
-    setYear(prevYear);
+    setOnDay(0);
+    setOnMonth(prevMonth);
+    setOnYear(prevYear);
   };
 
   const RenderCalendar = () => {
-    const monthData = getMonthData(year, month);
+    const monthData = getMonthData(+onYear, +onMonth);
     const { isDarkColorScheme } = useTheme();
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -89,7 +107,7 @@ const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePi
           </RowBetween>
           <RowBetween style={tw`mt-4 mb-2`}>
             <H5>
-              {new Date(year, month).toLocaleString('default', { month: 'long' })} {year}
+              {new Date(+onYear, +onMonth).toLocaleString('default', { month: 'long' })} {onYear}
             </H5>
             <Row style={tw`gap-7`}>
               <TouchableOpacity onPress={handlePrevMonthPress}>
@@ -110,25 +128,25 @@ const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePi
         </View>
         {monthData.data.map((week, index) => (
           <View key={index} style={tw`w-full flex-row`}>
-            {week.map((day, idx) => (
+            {week.map((mapDay: number, idx: number) => (
               <TouchableOpacity
                 key={idx}
                 style={[tw`rounded flex-1 w-auto h-12 justify-center items-center`]}
-                onPress={() => handleDayPress(day)}
+                onPress={() => handleDayPress(mapDay)}
               >
                 {/* selected day circle */}
-                {selectedDate && day === Number(selectedDate) &&
+                {mapDay === +selectedDate.day && onMonth === +selectedDate.month - 1 && onYear === +selectedDate.year &&
                   <View style={[tw`w-11 h-11 absolute`,
-                  tw`bg-red-200 dark:bg-primary rounded-full`,
+                  mapDay > 0 && tw`bg-red-200 dark:bg-primary rounded-full`,
                   ]} />}
 
                 {/* day number */}
                 <Text style={[tw`text-lg text-black dark:text-white`]}>
-                  {day || ''}
+                  {mapDay || ''}
                 </Text>
 
                 {/* today dot */}
-                {day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear() &&
+                {mapDay === new Date().getDate() && onMonth === new Date().getMonth() && onYear === new Date().getFullYear() &&
                   <View style={tw`w-1 h-1 bg-red-500 rounded-full absolute bottom-2`} />}
 
               </TouchableOpacity>

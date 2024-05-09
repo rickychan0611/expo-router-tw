@@ -26,8 +26,8 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
   const tabBarHeight = useAppStore((state) => state.tabBarHeight)
   const topBarHeight = useOrdersStore((state) => state.topBarHeight)
 
-  const [selectedStartDate, setSelectedStartDate] = React.useState("")
-  const [selectedEndDate, setSelectedEndDate] = React.useState("")
+  const [selectedStartDate, setSelectedStartDate] = React.useState({year: "", month: "", day: ""})
+  const [selectedEndDate, setSelectedEndDate] = React.useState({year: "", month: "", day: ""})
   const [showStartDatePicker, setShowStartDatePicker] = React.useState(false)
   const [showEndDatePicker, setShowEndDatePicker] = React.useState(false)
 
@@ -133,7 +133,6 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
             From
           </Interact>
           <DatePicker
-            placeholder="Start Date"
             selectedDate={selectedStartDate}
             setSelectedDate={setSelectedStartDate}
             showDatePicker={showStartDatePicker}
@@ -145,7 +144,6 @@ const OrderFilterOptions = ({ menuSize }: { menuSize: any }) => {
             To
           </Interact>
           <DatePicker
-            placeholder="End Date"
             selectedDate={selectedEndDate}
             setSelectedDate={setSelectedEndDate}
             showDatePicker={showEndDatePicker}

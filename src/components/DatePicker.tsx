@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
-import { View, Text, Platform, Button, Modal } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, Button, Modal } from 'react-native';
 import tw from '@/tw';
 import PressableOpacity from './PressableOpacity';
-import TextInput from './TextInput';
 import Calendar from './Calendar';
-import { CalendarCheckIcon, CalendarIcon } from 'lucide-react-native';
+import { CalendarIcon } from 'lucide-react-native';
 import useTheme from '@/hooks/useTheme';
-import { RowBetween } from './FlexViews';
+import { Row, RowBetween } from './FlexViews';
 import { colors } from '@/colors';
+import { MaskedTextInput } from "react-native-mask-text";
 
+type SelectedDate = {
+  year: string;
+  month: string;
+  day: string;
+};
 type Props = {
-  placeholder: string;
-  selectedDate: string;
-  setSelectedDate: (date: string) => void;
+  selectedDate: SelectedDate
+  setSelectedDate: (date: SelectedDate) => void;
   showDatePicker: boolean;
   setShowDatePicker: (showDatePicker: boolean) => void;
 }
 
-const DateTimePickerExample = ({ placeholder, selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
+const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
 
   const { isDarkColorScheme } = useTheme();
 
-  const onChange = (date: Date) => {
-    console.log(date)
+  const onChange = (date: string) => {
+    // setSelectedDate(date);
   };
 
   const showDatepicker = () => {
     setShowDatePicker(true);
   };
 
+  useEffect(() => {
+    console.log(selectedDate)
+  }, [selectedDate])
 
   return (
     <>
@@ -39,10 +46,43 @@ const DateTimePickerExample = ({ placeholder, selectedDate, setSelectedDate, sho
         setSelectedDate={setSelectedDate}
       />
       <RowBetween style={tw`flex-1 border border-muted bg-input dark:bg-input-dark rounded`}>
-        <TextInput style={tw`flex-1 bg-input dark:bg-input-dark`}
-          placeholder={placeholder}
-          inputMode='numeric'
-        />
+        <Row style={tw`gap-1 p-2`}>
+          <MaskedTextInput
+            mask='9999'
+            style={tw`dark:text-white`}
+            placeholder={"YYYY"}
+            inputMode='numeric'
+            value={selectedDate.year}
+            onChangeText={(text: string) => {
+              setSelectedDate({ ...selectedDate, year: text })
+            }}
+            placeholderTextColor={'#9CA3AF'}
+          />
+          <Text style={tw`dark:text-white`}>/</Text>
+          <MaskedTextInput
+            mask='99'
+            style={tw`dark:text-white text-center`}
+            placeholder={"MM"}
+            inputMode='numeric'
+            value={selectedDate.month}
+            onChangeText={(text: string) => {
+              setSelectedDate({ ...selectedDate, month: text })
+            }}
+            placeholderTextColor={'#9CA3AF'}
+          />
+          <Text style={tw`dark:text-white`}>/</Text>
+          <MaskedTextInput
+            mask='99'
+            style={tw`dark:text-white text-center pr-2`}
+            placeholder={"DD"}
+            inputMode='numeric'
+            value={selectedDate.day}
+            onChangeText={(text: string) => {
+              setSelectedDate({ ...selectedDate, day: text })
+            }}
+            placeholderTextColor={'#9CA3AF'}
+          />
+        </Row>
         <PressableOpacity
           style={tw`justify-center items-center px-1`}
           onPress={showDatepicker} >
@@ -53,4 +93,4 @@ const DateTimePickerExample = ({ placeholder, selectedDate, setSelectedDate, sho
   );
 };
 
-export default DateTimePickerExample;
+export default DatePicker;
