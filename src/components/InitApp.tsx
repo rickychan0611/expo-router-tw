@@ -20,7 +20,7 @@ const InitApp = ({ children }: { children: React.ReactNode }) => {
 
   // const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
   // const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-  const { colorScheme, switchTheme, setColorScheme, isDarkColorScheme } = useTheme()
+  const { colorScheme, switchTheme, setColorScheme, isDark } = useTheme()
 
   const loadTheme = async () => {
     console.log("colorScheme", Appearance.getColorScheme())

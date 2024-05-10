@@ -23,7 +23,7 @@ type Props = {
 
 const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }: Props) => {
 
-  const { isDarkColorScheme } = useTheme();
+  const { isDark } = useTheme();
 
   const onChange = (date: string) => {
     // setSelectedDate(date);
@@ -82,7 +82,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, showDatePicker, setShowDate
         <PressableOpacity
           style={tw`justify-center items-center px-1`}
           onPress={showDatepicker} >
-          <CalendarIcon size={25} color={isDarkColorScheme ? 'white' : colors.secondary[600]} />
+          <CalendarIcon size={25} color={isDark ? 'white' : colors.secondary[600]} />
         </PressableOpacity>
       </RowBetween>
     </>

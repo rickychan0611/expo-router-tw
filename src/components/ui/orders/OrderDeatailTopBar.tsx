@@ -18,7 +18,7 @@ import useTheme from "@/hooks/useTheme";
 const OrderDeatailTopBar = () => {
   const [t, i18n] = useTranslation("common")
   const router = useRouter()
-  const { isDarkColorScheme } = useTheme()
+  const { isDark } = useTheme()
   const setTopBarHeight = useOrdersStore((state) => state.setTopBarHeight)
   const params = useLocalSearchParams()
 
@@ -42,7 +42,7 @@ const OrderDeatailTopBar = () => {
             <ColCenter style={tw`absolute top-0 z-50 h-full`}>
               <PressableOpacity
                 onPress={() => router.canGoBack() ? router.back() : router.push('/orders')}>
-                <ArrowLeft size={26} color={isDarkColorScheme ? colors.white : colors.white} />
+                <ArrowLeft size={26} color={isDark ? colors.white : colors.white} />
               </PressableOpacity>
             </ColCenter>
 

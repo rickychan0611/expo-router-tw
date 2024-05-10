@@ -103,7 +103,7 @@ const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePi
 
   const RenderCalendar = () => {
     const monthData = getMonthData(onYear, onMonth);
-    const { isDarkColorScheme } = useTheme();
+    const { isDark } = useTheme();
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
@@ -121,10 +121,10 @@ const Calendar = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePi
             </H5>
             <Row style={tw`gap-7`}>
               <TouchableOpacity onPress={handlePrevMonthPress}>
-                <ChevronLeft size={26} color={isDarkColorScheme ? 'white' : 'black'} />
+                <ChevronLeft size={26} color={isDark ? 'white' : 'black'} />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleNextMonthPress}>
-                <ChevronRight size={26} color={isDarkColorScheme ? 'white' : 'black'} />
+                <ChevronRight size={26} color={isDark ? 'white' : 'black'} />
               </TouchableOpacity>
             </Row>
           </RowBetween>

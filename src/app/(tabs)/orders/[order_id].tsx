@@ -1,26 +1,29 @@
+import { api_products } from '@/api/api_products'
 import { useOrder } from '@/api/queryHooks/useProductQueries'
 import { colors } from '@/colors'
 import Card from '@/components/Card'
 import Divider from '@/components/Divider'
 import { Center, Row, RowBetween } from '@/components/FlexViews'
 import LoadingModal from '@/components/LoadingModal'
+import PressableOpacity from '@/components/PressableOpacity'
 import { H4, Interact, P1, P2, Small, Subhead, Subtle } from '@/components/Typography'
 import OrderDeatailTopBar from '@/components/ui/orders/OrderDeatailTopBar'
 import useTheme from '@/hooks/useTheme'
 import { Buyer, OrderItem } from '@/interfaces/productTypes'
 import tw from '@/tw'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Image } from 'expo-image'
 import { useLocalSearchParams } from 'expo-router'
 import { ChevronRight, Clock, Phone, Truck, UserCircle } from 'lucide-react-native'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, View } from 'react-native'
+import { ActivityIndicator, ScrollView, View } from 'react-native'
 
 type Props = {}
 
 const OrderDetail = (props: Props) => {
-  const { isDarkColorScheme } = useTheme()
+  const { isDark } = useTheme()
   const { t, i18n } = useTranslation("common")
   const { order_id } = useLocalSearchParams()
   const order = useOrder(order_id as string)
@@ -31,7 +34,7 @@ const OrderDetail = (props: Props) => {
       return (
         <Row style={tw`gap-3 w-full sm:w-1/2 p-2`}>
           <Center style={tw`bg-secondary-100 dark:bg-secondary-200 p-2 rounded-full`}>
-            <IconComponent size={24} color={isDarkColorScheme ? colors.secondary[400] : colors.secondary[600]} />
+            <IconComponent size={24} color={isDark ? colors.secondary[400] : colors.secondary[600]} />
           </Center>
           <View style={tw`flex-1`}>
             <Small style={tw`text-muted`}>{label}</Small>
@@ -149,20 +152,93 @@ const OrderDetail = (props: Props) => {
   }
 
   const ActionSection = () => {
+    const [open, setOpen] = useState(false)
+    const [selected, setSelected] = useState("")
+    const { isDark } = useTheme()
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+    const queryClient = useQueryClient();
+
+    const proccessOrder = useMutation({
+      mutationFn: (proccess_type: string) => {
+        return api_products.process(order_id as string, proccess_type);
+      },
+      onMutate: () => setIsLoading(true),
+      onSuccess: (res) => {
+        if (res.code === 200) {
+          setIsLoading(false)
+          setOpen(false)
+          queryClient.invalidateQueries({ queryKey: ["order", { order_id }] })
+        }
+        else throw (res.response.data.message)
+      },
+      onError: (err: string) => {
+        setIsLoading(false)
+        setError(err)
+        console.log(err)
+      }
+    })
+
+    const handleAction = (proccess_type: string) => {
+      setError("")
+      setSelected(proccess_type)
+      proccessOrder.mutate(proccess_type)
+    }
+
     return (
       <>
         <Interact style={tw`p-2 my-2 text-muted`}>
           Order Status
         </Interact>
-        <Card>
-          <RowBetween>
-            <View>
-              <Interact>action</Interact>
-              <P1>waiting respond</P1>
-            </View>
-            <ChevronRight color={useTheme().isDarkColorScheme ? 'white' : 'black'}/>
-          </RowBetween>
-        </Card>
+        <View>
+          <PressableOpacity onPress={() => setOpen(!open)}>
+            <Card style={tw`border-2 border-primary-500 dark:border-primary-400`}>
+              <RowBetween>
+                <View>
+                  <Interact style={tw`text-muted`}>Action</Interact>
+                  <P1 style={tw`text-primary-500 dark:text-primary-400`}>Waiting respond</P1>
+                </View>
+                <ChevronRight color={isDark ? 'white' : 'black'} />
+              </RowBetween>
+            </Card>
+          </PressableOpacity>
+        </View>
+
+        {open && <View style={tw``}>
+          <Card>
+            <PressableOpacity onPress={() => {
+              handleAction("delivering")
+            }} >
+              <RowBetween style={tw`p-2`}>
+                <Interact>Out for delivery</Interact>
+                <Row style={tw`gap-2`}>
+                  {error && selected === "delivering" && <Interact style={tw`text-primary-600`}>{error}</Interact>}
+                  {isLoading && selected === "delivering" ?
+                    <ActivityIndicator color={isDark ? 'white' : 'red'} /> :
+                    <View style={[tw`h-4 w-4 rounded-full`,
+                    selected === "delivering" ? tw`bg-primary-500` : tw`bg-neutral-100 dark:bg-white`]} />}
+                </Row>
+              </RowBetween>
+            </PressableOpacity>
+
+            <Divider style={tw`my-2`} />
+
+            <PressableOpacity onPress={() => {
+              handleAction("delivered")
+            }} >
+              <RowBetween style={tw`p-2`}>
+                <Interact>Delivery</Interact>
+                <Row style={tw`gap-2`}>
+                  {error && selected === "delivered" && <Interact style={tw`text-primary-600`}>{error}</Interact>}
+                  {isLoading && selected === "delivered" ?
+                    <ActivityIndicator color={isDark ? 'white' : 'red'} /> :
+                    <View style={[tw`h-4 w-4 rounded-full`,
+                    selected === "delivered" ? tw`bg-primary-500` : tw`bg-neutral-100 dark:bg-white`]} />}
+                </Row>
+              </RowBetween>
+            </PressableOpacity>
+          </Card>
+        </View>}
       </>
     )
   }

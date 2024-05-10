@@ -1,21 +1,22 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { productKeys } from "../query-factory"
 import { Order } from "@/interfaces/productTypes"
 import { useOrdersStore } from "@/stores"
 import useIsLoggedIn from "@/hooks/useIsLoggedIn"
 import { api_products } from "../api_products"
+import { useState } from "react"
 
 export const useOrder = (order_id: string) => {
   const res = useQuery({
-    queryKey: ['order', {order_id}],
+    queryKey: ['order', { order_id }],
     queryFn: () => api_products.getOrder(order_id)
   })
-  return {...res, data: res?.data?.data as Order}
+  return { ...res, data: res?.data?.data as Order }
 }
 
 export const useInfiniteQueryOrders = () => {
 
-  const { status, page, pagesize, start_timestamp, end_timestamp} = useOrdersStore((state) => state.orderFilterQueryParams)
+  const { status, page, pagesize, start_timestamp, end_timestamp } = useOrdersStore((state) => state.orderFilterQueryParams)
   const fetchOrders = async ({ pageParam = 1 }) => {
     return api_products.getOrders(status, pageParam, pagesize, start_timestamp, end_timestamp)
   }

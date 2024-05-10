@@ -20,7 +20,7 @@ export default function useTheme() {
     colorScheme,
     switchTheme,
     setColorScheme,
-    isDarkColorScheme: colorScheme === 'dark'
+    isDark: colorScheme === 'dark'
   };
 
 }

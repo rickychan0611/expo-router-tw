@@ -24,12 +24,12 @@ TextInput.defaultProps.maxFontSizeMultiplier = 1.5
 export default function RootLayoutNav() {
   const [up, setUp] = React.useState(true)
   // const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-  const { isDarkColorScheme } = useColorScheme()
+  const { isDark } = useColorScheme()
 
   React.useEffect(() => {
     setUp(false)
     setTimeout(() => { setUp(true) }, 1)
-  }, [isDarkColorScheme])
+  }, [isDark])
 
   const client = new QueryClient({
     defaultOptions: {

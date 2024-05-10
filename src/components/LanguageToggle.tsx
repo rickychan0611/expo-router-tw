@@ -11,7 +11,7 @@ import i18next from '@/locales/i18n';
 import PressableOpacity from './PressableOpacity';
 
 export function LanguageToggle() {
-  const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const { isDark, setColorScheme } = useColorScheme();
 
   useEffect(() => {
     const getSystemLanguage = async () => {

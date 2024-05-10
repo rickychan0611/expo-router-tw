@@ -29,9 +29,9 @@ export const api_products = {
     return await GET("/api/b2b/supplier/supplyorder",
       { order_id })
   },
-  process: async (order_id: string, process: string) => {
+  process: async (order_id: string, process_type: string) => {
     return await POST("/api/b2b/supplier/supplyorder/process",
-      { order_id, process })
+      { order_id, process_type })
   },
   supplysettlementsummary: async () => {
     return await GET("/api/b2b/supplier/supplysettlementsummary",

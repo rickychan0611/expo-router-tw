@@ -6,7 +6,7 @@ import { MoonStar, Sun } from 'lucide-react-native';
 import PressableOpacity from './PressableOpacity';
 
 export function ThemeToggle() {
-  const { isDarkColorScheme, colorScheme, setColorScheme } = useTheme();
+  const { isDark, colorScheme, setColorScheme } = useTheme();
   const triggerThemeKey = useAppStore((state) => state.triggerThemeKey);
   return (
     <PressableOpacity
@@ -17,7 +17,7 @@ export function ThemeToggle() {
         AsyncStorage.setItem('theme', newTheme);
       }}
     >
-      {isDarkColorScheme ? (
+      {isDark ? (
         <MoonStar color={colors.muted.DEFAULT} size={23} strokeWidth={1.25} />
       ) : (
         <Sun color={colors.muted.DEFAULT} size={24} strokeWidth={1.25} />

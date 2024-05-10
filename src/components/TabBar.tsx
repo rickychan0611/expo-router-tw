@@ -15,7 +15,7 @@ import PressableOpacity from './PressableOpacity';
 export default function TabBar({ state, descriptors, navigation, router }: any) {
   const insets = useSafeAreaInsets();
   const count = useAppStore((state) => state.count);
-  const { isDarkColorScheme } = useColorScheme();
+  const { isDark } = useColorScheme();
   const setTabBarHeight = useAppStore((state) => state.setTabBarHeight);
 
   const Icon = (props: any) => {
@@ -74,8 +74,8 @@ export default function TabBar({ state, descriptors, navigation, router }: any) 
         ) {
 
           const color = isFocused ?
-            (isDarkColorScheme ? colors.primary.dark.DEFAULT : colors.primary.DEFAULT) :
-            (isDarkColorScheme ? colors.muted.dark : colors.muted.DEFAULT)
+            (isDark ? colors.primary.dark.DEFAULT : colors.primary.DEFAULT) :
+            (isDark ? colors.muted.dark : colors.muted.DEFAULT)
 
           return (
             <View style={tw`flex-1`} key={index}>
